@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import MediaCard from '../components/MediaCard';
 import { tvmazeSearch } from '../api';
 import { SkeletonCards } from '../components/Skeletons';
+import { SEO } from '../components/SEO';
 
 const QUERIES = {
   popular: ['Breaking Bad', 'Game of Thrones', 'Stranger Things', 'The Witcher', 'The Mandalorian', 'Wednesday', 'House of the Dragon', 'The Last of Us', 'Severance', 'Squid Game'],
@@ -26,6 +27,7 @@ export default function TVShows() {
 
   return (
     <main className="page">
+      <SEO title="TV Shows" description="Series worth your time. Browse popular, top rated, and currently airing TV shows." url="https://kinshow.vercel.app/tv" />
       <div className="page-header">
         <h1 className="page-title">TV Shows</h1>
         <p className="page-subtitle">Series worth your time</p>

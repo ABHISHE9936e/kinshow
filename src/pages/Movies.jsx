@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import MediaCard from '../components/MediaCard';
 import { MOVIES } from '../api';
 import { SkeletonCards } from '../components/Skeletons';
+import { SEO } from '../components/SEO';
 
 const TABS = { popular: 'Popular', top_rated: 'Top Rated', new: 'New Releases (2023+)' };
 
@@ -24,6 +25,7 @@ export default function Movies() {
 
   return (
     <main className="page">
+      <SEO title="Movies" description="Discover films across every genre and era. Browse popular, top rated, and new releases." url="https://kinshow.vercel.app/movies" />
       <div className="page-header">
         <h1 className="page-title">Movies</h1>
         <p className="page-subtitle">Discover films across every genre and era</p>

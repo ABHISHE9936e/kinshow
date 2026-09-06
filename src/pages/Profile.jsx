@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useWatchlist, useHistory } from '../store';
 import { PosterImg } from '../utils/poster';
+import { SEO } from '../components/SEO';
 
 export default function Profile() {
   const { list } = useWatchlist();
@@ -11,6 +12,7 @@ export default function Profile() {
 
   return (
     <main className="page">
+      <SEO title="Profile" description="Your Kinshow profile. Track your watchlist and viewing history." url="https://kinshow.vercel.app/profile" />
       <div className="profile-header">
         <div className="profile-avatar"><span>L</span></div>
         <div className="profile-info">

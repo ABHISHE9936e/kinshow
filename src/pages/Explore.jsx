@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { tvmazeSearch, MOVIES } from '../api';
 import MediaCard from '../components/MediaCard';
 import { SkeletonCards } from '../components/Skeletons';
+import { SEO } from '../components/SEO';
 
 const GENRES = ['Action', 'Comedy', 'Drama', 'Horror', 'Sci-Fi', 'Thriller', 'Romance', 'Animation', 'Adventure', 'Crime', 'Fantasy', 'Mystery', 'War', 'Documentary'];
 
@@ -19,6 +20,7 @@ export default function Explore() {
 
   return (
     <main className="page">
+      <SEO title="Explore" description="Browse by genre and discover something new. Movies and TV shows for every taste." url="https://kinshow.vercel.app/explore" />
       <div className="page-header">
         <h1 className="page-title">Explore</h1>
         <p className="page-subtitle">Browse by genre and discover something new</p>

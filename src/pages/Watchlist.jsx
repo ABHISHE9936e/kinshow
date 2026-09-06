@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useWatchlist } from '../store';
 import { useToast } from '../components/Toast';
 import { PosterImg } from '../utils/poster';
+import { SEO } from '../components/SEO';
 
 export default function Watchlist() {
   const { list, remove } = useWatchlist();
@@ -19,6 +20,7 @@ export default function Watchlist() {
   if (list.length === 0) {
     return (
       <main className="page">
+        <SEO title="My List" description="Your personal watchlist. Save movies and shows to watch later." url="https://kinshow.vercel.app/watchlist" />
         <div className="empty-state">
           <div className="empty-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div>
           <h3>Your watchlist is waiting</h3>
@@ -31,6 +33,7 @@ export default function Watchlist() {
 
   return (
     <main className="page">
+      <SEO title="My List" description="Your personal watchlist. Save movies and shows to watch later." url="https://kinshow.vercel.app/watchlist" />
       <div className="page-header">
         <h1 className="page-title">My List</h1>
         <p className="page-subtitle">{list.length} title{list.length !== 1 ? 's' : ''} saved</p>

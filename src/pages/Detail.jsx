@@ -7,6 +7,7 @@ import CastCard from '../components/CastCard';
 import MediaCard from '../components/MediaCard';
 import { SkeletonDetail } from '../components/Skeletons';
 import { PosterImg, makePoster } from '../utils/poster';
+import { SEO, StructuredData, movieSchema, tvSchema, breadcrumbSchema } from '../components/SEO';
 
 export default function Detail() {
   const { type, id } = useParams();
@@ -85,6 +86,19 @@ export default function Detail() {
 
   return (
     <main className="page detail">
+      <SEO
+        title={`${title} (${y(data)})`}
+        description={data.overview?.slice(0, 160) || `${title} - ${isTv ? 'TV Series' : 'Movie'}`}
+        image={posterUrl}
+        url={`https://kinshow.vercel.app/detail/${type}/${id}`}
+        type={isTv ? 'video.tv_show' : 'video.movie'}
+      />
+      <StructuredData data={isTv ? tvSchema(data) : movieSchema(data)} />
+      <StructuredData data={breadcrumbSchema([
+        { name: 'Home', url: 'https://kinshow.vercel.app/' },
+        { name: isTv ? 'TV Shows' : 'Movies', url: `https://kinshow.vercel.app/${isTv ? 'tv' : 'movies'}` },
+        { name: title, url: `https://kinshow.vercel.app/detail/${type}/${id}` }
+      ])} />
       <div className="detail-backdrop" style={{ background: 'linear-gradient(135deg, #12141c 0%, #1a1a2e 50%, #0f3460 100%)' }} />
       <div className="detail-backdrop-gradient" />
       <div className="detail-content">
