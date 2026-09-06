@@ -1,4 +1,5 @@
 const TVMAZE = 'https://api.tvmaze.com';
+const TVMAZE_KEY = 'ef2igMeJwNOOzyXM_GPKpbMDpHgfXtat';
 const OMDB_KEY = 'b90dd268';
 const OMDB = 'http://www.omdbapi.com';
 const PRE = 'lg_';
@@ -10,7 +11,12 @@ const save = (k, v) => { try { localStorage.setItem(PRE + k, JSON.stringify({ v,
 async function fetchJSON(url, ms = 8000) {
   const c = new AbortController();
   const t = setTimeout(() => c.abort(), ms);
-  try { const r = await fetch(url, { signal: c.signal }); clearTimeout(t); if (!r.ok) throw 0; return await r.json(); } catch { clearTimeout(t); return null; }
+  try {
+    const u = new URL(url);
+    if (u.hostname === 'api.tvmaze.com') u.searchParams.set('apikey', TVMAZE_KEY);
+    const r = await fetch(u, { signal: c.signal }); clearTimeout(t);
+    if (!r.ok) throw 0; return await r.json();
+  } catch { clearTimeout(t); return null; }
 }
 
 function stripHtml(s) { return s ? s.replace(/<[^>]*>/g, '').trim() : ''; }
