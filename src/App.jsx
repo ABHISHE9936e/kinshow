@@ -70,6 +70,7 @@ function AppInner() {
           </div>
           <div className="footer-bottom">
             <p className="footer-copy">© 2026 Kinshow. For educational purposes only. All product names, logos, and brands are property of their respective owners.</p>
+            <p className="footer-copy" style={{marginTop: '8px'}}><a href="https://www.profitableratecpmnetwork.com/u8ys3gam?key=6df6fc40cf7a63bafcab24a531e17840" target="_blank" rel="noopener noreferrer" style={{color: 'var(--text-muted)', fontSize: '11px'}}>Sponsored</a></p>
           </div>
         </div>
       </footer>
