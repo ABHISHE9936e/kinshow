@@ -3,12 +3,12 @@ const TVMAZE_KEY = 'ef2igMeJwNOOzyXM_GPKpbMDpHgfXtat';
 const OMDB_KEY = 'b90dd268';
 const OMDB = 'http://www.omdbapi.com';
 const PRE = 'lg_';
-const TTL = 30 * 60000;
+const TTL = 24 * 60 * 60 * 1000;
 
 const cache = (k) => { try { const d = JSON.parse(localStorage.getItem(PRE + k)); if (!d || Date.now() - d.t > TTL) { localStorage.removeItem(PRE + k); return null; } return d.v; } catch { return null; } };
 const save = (k, v) => { try { localStorage.setItem(PRE + k, JSON.stringify({ v, t: Date.now() })); } catch {} };
 
-async function fetchJSON(url, ms = 8000) {
+async function fetchJSON(url, ms = 12000) {
   const c = new AbortController();
   const t = setTimeout(() => c.abort(), ms);
   try {
@@ -150,6 +150,25 @@ export async function tvmazeEpisodes(showId, seasonNum) {
   }));
   save(ck, eps);
   return eps;
+}
+
+export async function tvmazeShowsByPage(page = 1) {
+  const ck = `tv_page_${page}`;
+  const hit = cache(ck);
+  if (hit) return hit;
+  const d = await fetchJSON(`${TVMAZE}/shows?page=${page}`, 12000);
+  if (!d || !Array.isArray(d)) return [];
+  const shows = d.map(s => _tvmazeToShow(s)).filter(Boolean);
+  save(ck, shows);
+  return shows;
+}
+
+export async function tvmazeMultipleShows(ids) {
+  const uncached = ids.filter(id => !cache('tv_i_' + id));
+  if (uncached.length > 0) {
+    await Promise.all(uncached.map(id => tvmazeShow(id)));
+  }
+  return ids.map(id => cache('tv_i_' + id)).filter(Boolean);
 }
 
 export async function searchMulti(q) {

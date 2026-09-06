@@ -1,7 +1,7 @@
 import Hero from '../components/Hero';
 import ContentRail from '../components/ContentRail';
 import { useState, useEffect } from 'react';
-import { tvmazeToShow, MOVIES } from '../api';
+import { tvmazeMultipleShows, MOVIES } from '../api';
 import { SEO, websiteSchema, StructuredData } from '../components/SEO';
 
 const TV_IDS = [2993, 44933, 38963, 53647, 43687, 17861, 28276, 46562];
@@ -11,9 +11,8 @@ function useTvShows(ids) {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(true);
-    Promise.all(ids.map(id =>
-      fetch(`https://api.tvmaze.com/shows/${id}`).then(r => r.ok ? r.json() : null).then(d => d ? tvmazeToShow(d) : null)
-    )).then(results => { setItems(results.filter(Boolean)); setLoading(false); })
+    tvmazeMultipleShows(ids)
+      .then(results => { setItems(results); setLoading(false); })
       .catch(() => { setItems([]); setLoading(false); });
   }, [ids.join(',')]);
   return { items, loading };

@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import MediaCard from '../components/MediaCard';
-import { tvmazeSearch } from '../api';
+import { tvmazeShowsByPage } from '../api';
 import { SkeletonCards } from '../components/Skeletons';
 import { SEO } from '../components/SEO';
 import { useInfiniteScroll } from '../hooks/useInfiniteScroll';
 
-const QUERIES = {
-  popular: ['Breaking Bad', 'Game of Thrones', 'Stranger Things', 'The Witcher', 'The Mandalorian', 'Wednesday', 'House of the Dragon', 'The Last of Us', 'Severance', 'Squid Game', 'Peaky Blinders', 'The Office', 'Friends', 'Lost', 'Dexter', 'Prison Break', 'Grey\'s Anatomy', 'The Good Doctor', 'Vikings', 'Outlander'],
-  top_rated: ['Chernobyl', 'Band of Brothers', 'The Wire', 'Planet Earth', 'Cosmos', 'True Detective', 'Fargo', 'The Sopranos', 'Avatar The Last Airbender', 'Sherlock', 'Game of Thrones', 'Breaking Bad', 'Better Call Saul', 'The Wire', 'Deadwood', 'Rome', 'Downton Abbey', 'Narcos', 'The Crown', 'Mindhunter'],
-  on_the_air: ['Loki', 'The Boys', 'Foundation', 'Andor', 'Yellowjackets', 'The White Lotus', 'Rings of Power', 'Star Trek', 'Dark', 'Money Heist', 'Arcane', 'Shogun', 'Fallout', '3 Body Problem', 'The Penguin', 'Dune: Prophecy', 'Silo', 'Severance', 'Wednesday', 'Stranger Things'],
-  airing_today: ['South Park', 'The Simpsons', 'Family Guy', 'Bob Burgers', 'SNL', 'The Daily Show', 'Jimmy Fallon', 'Colbert', 'Last Week Tonight', 'Real Time', 'Bill Maher', 'Late Night', 'Tonight Show', 'Daily Show', 'Comedy Central', 'Adult Swim', 'Rick and Morty', 'Solar Opposites', 'Big Mouth', 'Human Resources'],
+const TABS = {
+  popular: { label: 'Popular', pages: [1, 2, 3] },
+  top_rated: { label: 'Top Rated', pages: [4, 5, 6] },
+  on_the_air: { label: 'On The Air', pages: [7, 8, 9] },
+  cult: { label: 'Cult Classics', pages: [10, 11, 12] },
 };
 
 export default function TVShows() {
@@ -20,10 +20,13 @@ export default function TVShows() {
 
   useEffect(() => {
     setLoading(true);
-    const queries = [...(QUERIES[tab] || QUERIES.popular)];
-    const pick = queries.sort(() => Math.random() - 0.5).slice(0, 20);
-    Promise.all(pick.map(q => tvmazeSearch(q).then(shows => shows[0] || null)))
-      .then(results => { setAllItems(results.filter(Boolean).map(s => ({ ...s, media_type: 'tv' }))); setLoading(false); })
+    const config = TABS[tab];
+    Promise.all(config.pages.map(p => tvmazeShowsByPage(p)))
+      .then(results => {
+        const shows = results.flat().map(s => ({ ...s, media_type: 'tv' }));
+        setAllItems(shows);
+        setLoading(false);
+      })
       .catch(() => { setAllItems([]); setLoading(false); });
   }, [tab]);
 
@@ -35,7 +38,7 @@ export default function TVShows() {
         <p className="page-subtitle">Series worth your time</p>
       </div>
       <div className="page-tabs">
-        {Object.keys(QUERIES).map(k => <button key={k} className={`tab ${tab === k ? 'tab--active' : ''}`} onClick={() => setTab(k)}>{k.replace('_', ' ').replace(/\b\w/g, c => c.toUpperCase())}</button>)}
+        {Object.entries(TABS).map(([k, v]) => <button key={k} className={`tab ${tab === k ? 'tab--active' : ''}`} onClick={() => setTab(k)}>{v.label}</button>)}
       </div>
       <div className="grid">
         {loading ? <SkeletonCards count={12} /> : visible.map((item, i) => <MediaCard key={`${item.id}-${i}`} item={item} mediaType="tv" />)}

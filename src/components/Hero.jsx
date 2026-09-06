@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { tvmazeToShow, MOVIES, title as t, year as y, rating as r } from '../api';
+import { tvmazeMultipleShows, MOVIES, title as t, year as y, rating as r } from '../api';
 
 const TV_IDS = [2993, 44933, 38963, 53647];
 
@@ -12,10 +12,8 @@ export default function Hero() {
 
   useEffect(() => {
     const movieSlice = MOVIES.filter(m => m.vote_average >= 8.0).slice(0, 4);
-    Promise.all(TV_IDS.map(id =>
-      fetch(`https://api.tvmaze.com/shows/${id}`).then(r => r.ok ? r.json() : null).then(d => d ? tvmazeToShow(d) : null)
-    )).then(tvShows => {
-      const combined = [...movieSlice.map(m => ({ ...m, media_type: 'movie' })), ...tvShows.filter(Boolean).map(s => ({ ...s, media_type: 'tv' }))];
+    tvmazeMultipleShows(TV_IDS).then(tvShows => {
+      const combined = [...movieSlice.map(m => ({ ...m, media_type: 'movie' })), ...tvShows.map(s => ({ ...s, media_type: 'tv' }))];
       setItems(combined.sort(() => Math.random() - 0.5).slice(0, 7));
     }).catch(() => setItems(movieSlice.map(m => ({ ...m, media_type: 'movie' }))));
   }, []);
