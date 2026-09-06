@@ -10,6 +10,9 @@ import Player from './pages/Player';
 import Watchlist from './pages/Watchlist';
 import Profile from './pages/Profile';
 import Explore from './pages/Explore';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import Privacy from './pages/Privacy';
 
 function AppInner() {
   const { list } = useWatchlist();
@@ -25,6 +28,9 @@ function AppInner() {
         <Route path="/watchlist" element={<Watchlist />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/explore" element={<Explore />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/privacy" element={<Privacy />} />
       </Routes>
       <footer className="footer">
         <div className="footer-inner">
@@ -43,12 +49,11 @@ function AppInner() {
               </ul>
             </div>
             <div className="footer-col">
-              <h4 className="footer-heading">Genres</h4>
+              <h4 className="footer-heading">Company</h4>
               <ul className="footer-links">
-                <li><a href="/movies">Action</a></li>
-                <li><a href="/movies">Comedy</a></li>
-                <li><a href="/movies">Drama</a></li>
-                <li><a href="/movies">Sci-Fi</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/privacy">Privacy Policy</a></li>
               </ul>
             </div>
             <div className="footer-col">

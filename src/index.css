@@ -792,6 +792,21 @@ ul, ol { list-style: none; }
 @keyframes slideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
 .load-more { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; padding: 0 24px; max-width: 1400px; margin: 20px auto; }
+
+/* ─── LEGAL PAGES ─────────────────────────── */
+.legal-page { max-width: 800px; margin: 0 auto; padding: 40px 24px 60px; }
+.legal-title { font-size: 32px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+.legal-updated { font-size: 13px; color: var(--text-muted); margin-bottom: 32px; }
+.legal-section { margin-bottom: 32px; }
+.legal-section h2 { font-size: 18px; font-weight: 600; margin-bottom: 12px; color: var(--text); }
+.legal-section p { font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 12px; }
+.legal-section ul { list-style: disc; padding-left: 20px; margin-bottom: 12px; }
+.legal-section li { font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 6px; }
+.legal-section a { color: var(--accent); text-decoration: none; }
+.legal-section a:hover { text-decoration: underline; }
+.contact-email { font-size: 18px; font-weight: 600; color: var(--accent); }
+.contact-link { font-size: 14px; font-weight: 500; color: var(--accent); }
+.contact-socials { display: flex; gap: 10px; }
 @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 @keyframes toastIn { from { opacity: 0; transform: translateX(20px) scale(0.95); } to { opacity: 1; transform: translateX(0) scale(1); } }

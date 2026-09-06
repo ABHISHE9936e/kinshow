@@ -48,6 +48,39 @@ const routes = [
       <h1 style="position:absolute;left:-9999px">Explore Movies & TV Shows</h1>
       <p style="position:absolute;left:-9999px">Explore movies and TV shows by genre. Find action, comedy, drama, horror, sci-fi, thriller, and more.</p>
       <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kinshow.vercel.app/"},{"@type":"ListItem","position":2,"name":"Explore","item":"https://kinshow.vercel.app/explore"}]}</script>`
+  },
+  {
+    path: '/about',
+    title: 'About - Kinshow',
+    description: 'Learn about Kinshow — your go-to platform for discovering movies and TV shows.',
+    canonical: 'https://kinshow.vercel.app/about',
+    type: 'website',
+    content: `
+      <h1 style="position:absolute;left:-9999px">About Kinshow</h1>
+      <p style="position:absolute;left:-9999px">Kinshow is a free cinema discovery platform designed to help you find your next favorite movie or TV show. Browse ratings, cast information, and streaming availability.</p>
+      <script type="application/ld+json">{"@context":"https://schema.org","@type":"AboutPage","name":"About Kinshow","url":"https://kinshow.vercel.app/about","description":"Learn about Kinshow cinema discovery platform"}</script>`
+  },
+  {
+    path: '/contact',
+    title: 'Contact Us - Kinshow',
+    description: 'Get in touch with the Kinshow team. Send feedback, report bugs, or suggest new features.',
+    canonical: 'https://kinshow.vercel.app/contact',
+    type: 'website',
+    content: `
+      <h1 style="position:absolute;left:-9999px">Contact Us</h1>
+      <p style="position:absolute;left:-9999px">Get in touch with the Kinshow team. Email us at kiinshuk@gmail.com or visit our GitHub repository.</p>
+      <script type="application/ld+json">{"@context":"https://schema.org","@type":"ContactPage","name":"Contact Us","url":"https://kinshow.vercel.app/contact","description":"Get in touch with the Kinshow team"}</script>`
+  },
+  {
+    path: '/privacy',
+    title: 'Privacy Policy - Kinshow',
+    description: 'Kinshow privacy policy. Learn how we collect, use, and protect your data.',
+    canonical: 'https://kinshow.vercel.app/privacy',
+    type: 'website',
+    content: `
+      <h1 style="position:absolute;left:-9999px">Privacy Policy</h1>
+      <p style="position:absolute;left:-9999px">Kinshow privacy policy. Learn how we collect, use, and protect your information when you visit our website.</p>
+      <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Privacy Policy","url":"https://kinshow.vercel.app/privacy","description":"Kinshow privacy policy"}</script>`
   }
 ];
 
