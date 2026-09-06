@@ -32,9 +32,6 @@ function AppInner() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/privacy" element={<Privacy />} />
       </Routes>
-      <div className="ad-container">
-        <div id="container-962da97bc81437bf9bb4384db35f6192"></div>
-      </div>
       <footer className="footer">
         <div className="footer-inner">
           <div className="footer-grid">
