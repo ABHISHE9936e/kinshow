@@ -3,13 +3,15 @@ import MediaCard from '../components/MediaCard';
 import { MOVIES } from '../api';
 import { SkeletonCards } from '../components/Skeletons';
 import { SEO } from '../components/SEO';
+import { useInfiniteScroll } from '../hooks/useInfiniteScroll';
 
 const TABS = { popular: 'Popular', top_rated: 'Top Rated', new: 'New Releases (2023+)' };
 
 export default function Movies() {
   const [tab, setTab] = useState('popular');
-  const [items, setItems] = useState([]);
+  const [allItems, setAllItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { visible, hasMore, loaderRef } = useInfiniteScroll(allItems, 12);
 
   useEffect(() => {
     setLoading(true);
@@ -18,7 +20,7 @@ export default function Movies() {
       if (tab === 'top_rated') result.sort((a, b) => (b.vote_average || 0) - (a.vote_average || 0));
       else if (tab === 'new') result = result.filter(m => parseInt(m.year) >= 2023);
       else result.sort((a, b) => (b.vote_average || 0) - (a.vote_average || 0));
-      setItems(result.map(m => ({ ...m, media_type: 'movie' })));
+      setAllItems(result.map(m => ({ ...m, media_type: 'movie' })));
       setLoading(false);
     }, 300);
   }, [tab]);
@@ -34,8 +36,10 @@ export default function Movies() {
         {Object.entries(TABS).map(([k, v]) => <button key={k} className={`tab ${tab === k ? 'tab--active' : ''}`} onClick={() => setTab(k)}>{v}</button>)}
       </div>
       <div className="grid">
-        {loading ? <SkeletonCards count={12} /> : items.map((item, i) => <MediaCard key={`${item.id}-${i}`} item={item} mediaType="movie" />)}
+        {loading ? <SkeletonCards count={12} /> : visible.map((item, i) => <MediaCard key={`${item.id}-${i}`} item={item} mediaType="movie" />)}
       </div>
+      {hasMore && !loading && <div ref={loaderRef} className="load-more"><SkeletonCards count={4} /></div>}
+      {!loading && visible.length === 0 && <div className="empty-state"><h3>No movies found</h3><p>Try another tab</p></div>}
     </main>
   );
 }
