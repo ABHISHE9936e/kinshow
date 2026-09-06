@@ -132,9 +132,9 @@ export async function tvmazeEpisodes(showId, seasonNum) {
   const ck = `tv_ep_${showId}_${seasonNum}`;
   const hit = cache(ck);
   if (hit) return hit;
-  const d = await fetchJSON(`${TVMAZE}/shows/${showId}/episodebyseasonnumber/${seasonNum}`, 8000);
+  const d = await fetchJSON(`${TVMAZE}/shows/${showId}/episodes`, 8000);
   if (!d || !Array.isArray(d)) return [];
-  const eps = d.map(e => ({
+  const eps = d.filter(e => e.season === seasonNum).map(e => ({
     id: e.id, number: e.number, season: e.season,
     name: e.name || `Episode ${e.number}`,
     airdate: e.airdate || '', runtime: e.runtime || 0,
