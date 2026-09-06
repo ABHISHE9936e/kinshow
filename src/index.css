@@ -422,7 +422,7 @@ ul, ol { list-style: none; }
 .empty-state p { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; }
 
 /* ─── DETAIL PAGE ─────────────────────────── */
-.detail { padding-top: 0; }
+.detail { padding-top: 0; padding-bottom: 40px; }
 .detail-backdrop {
   position: fixed; top: 0; left: 0; right: 0; height: 50vh; min-height: 400px;
   background-size: cover; background-position: center;
@@ -494,7 +494,7 @@ ul, ol { list-style: none; }
 .detail-section {
   position: relative; z-index: 2;
   max-width: 1400px; margin: 0 auto;
-  padding: 36px 24px 0;
+  padding: 36px 24px 20px;
 }
 .detail-section-title {
   font-size: 18px; font-weight: 600; margin-bottom: 18px;
@@ -738,7 +738,7 @@ ul, ol { list-style: none; }
 .genre-chip:hover { background: var(--surface-hover); border-color: var(--accent); color: var(--text); }
 
 /* ─── FOOTER ──────────────────────────────── */
-.footer { border-top: 1px solid var(--border); padding: 48px 24px 24px; margin-top: auto; background: var(--bg); }
+.footer { border-top: 1px solid var(--border); padding: 48px 24px 24px; margin-top: auto; background: var(--bg); position: relative; z-index: 10; }
 .footer-inner { max-width: 1200px; margin: 0 auto; }
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
 .footer-brand { font-size: 18px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
