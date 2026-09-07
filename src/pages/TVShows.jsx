@@ -3,7 +3,6 @@ import MediaCard from '../components/MediaCard';
 import { tvmazeShowsByPage } from '../api';
 import { SkeletonCards } from '../components/Skeletons';
 import { SEO } from '../components/SEO';
-import { useInfiniteScroll } from '../hooks/useInfiniteScroll';
 
 const TABS = {
   popular: { label: 'Popular', pages: [1, 2, 3] },
@@ -16,7 +15,6 @@ export default function TVShows() {
   const [tab, setTab] = useState('popular');
   const [allItems, setAllItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { visible, hasMore, loaderRef } = useInfiniteScroll(allItems, 12);
 
   useEffect(() => {
     setLoading(true);
@@ -41,10 +39,9 @@ export default function TVShows() {
         {Object.entries(TABS).map(([k, v]) => <button key={k} className={`tab ${tab === k ? 'tab--active' : ''}`} onClick={() => setTab(k)}>{v.label}</button>)}
       </div>
       <div className="grid">
-        {loading ? <SkeletonCards count={12} /> : visible.map((item, i) => <MediaCard key={`${item.id}-${i}`} item={item} mediaType="tv" />)}
+        {loading ? <SkeletonCards count={12} /> : allItems.map((item, i) => <MediaCard key={`${item.id}-${i}`} item={item} mediaType="tv" />)}
       </div>
-      {hasMore && !loading && <div ref={loaderRef} className="load-more"><SkeletonCards count={4} /></div>}
-      {!loading && visible.length === 0 && <div className="empty-state"><h3>No shows found</h3><p>Try again later</p></div>}
+      {!loading && allItems.length === 0 && <div className="empty-state"><h3>No shows found</h3><p>Try again later</p></div>}
     </main>
   );
 }

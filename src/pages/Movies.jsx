@@ -1,9 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import MediaCard from '../components/MediaCard';
 import { MOVIES, fetchAllMoviePosters } from '../api';
 import { SkeletonCards } from '../components/Skeletons';
 import { SEO } from '../components/SEO';
-import { useInfiniteScroll } from '../hooks/useInfiniteScroll';
 
 const TABS = { popular: 'Popular', top_rated: 'Top Rated', new: 'New Releases (2023+)' };
 
@@ -19,24 +18,23 @@ export default function Movies() {
   const [tab, setTab] = useState('popular');
   const [allItems, setAllItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  const postersRef = useRef({});
-  const { visible, hasMore, loaderRef } = useInfiniteScroll(allItems, 12);
 
   useEffect(() => {
-    let active = true;
     setLoading(true);
     fetchAllMoviePosters().then(posters => {
-      if (!active) return;
-      postersRef.current = posters;
       setAllItems(getMoviesForTab(tab, posters));
       setLoading(false);
+    }).catch(() => {
+      setAllItems(getMoviesForTab(tab, {}));
+      setLoading(false);
     });
-    return () => { active = false; };
   }, []);
 
   useEffect(() => {
-    if (Object.keys(postersRef.current).length > 0) {
-      setAllItems(getMoviesForTab(tab, postersRef.current));
+    if (!loading) {
+      fetchAllMoviePosters().then(posters => {
+        setAllItems(getMoviesForTab(tab, posters));
+      });
     }
   }, [tab]);
 
@@ -51,10 +49,9 @@ export default function Movies() {
         {Object.entries(TABS).map(([k, v]) => <button key={k} className={`tab ${tab === k ? 'tab--active' : ''}`} onClick={() => setTab(k)}>{v}</button>)}
       </div>
       <div className="grid">
-        {loading ? <SkeletonCards count={12} /> : visible.map((item, i) => <MediaCard key={`${item.id}-${i}`} item={item} mediaType="movie" />)}
+        {loading ? <SkeletonCards count={12} /> : allItems.map((item, i) => <MediaCard key={`${item.id}-${i}`} item={item} mediaType="movie" />)}
       </div>
-      {hasMore && !loading && <div ref={loaderRef} className="load-more"><SkeletonCards count={4} /></div>}
-      {!loading && visible.length === 0 && <div className="empty-state"><h3>No movies found</h3><p>Try another tab</p></div>}
+      {!loading && allItems.length === 0 && <div className="empty-state"><h3>No movies found</h3><p>Try another tab</p></div>}
     </main>
   );
 }
