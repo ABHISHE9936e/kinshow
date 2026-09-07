@@ -414,7 +414,7 @@ ul, ol { list-style: none; }
 
 /* ─── LOAD MORE ───────────────────────────── */
 .load-more-wrap { display: flex; justify-content: center; padding: 32px 24px 48px; }
-.load-more { min-width: 160px; }
+.load-more { min-width: 160px; min-height: 200px; padding: 20px 0; }
 
 /* ─── EMPTY STATE ─────────────────────────── */
 .empty-state { text-align: center; padding: 80px 24px; max-width: 400px; margin: 0 auto; }

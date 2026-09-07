@@ -1,36 +1,39 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export function useInfiniteScroll(allItems, batchSize = 12) {
   const [visible, setVisible] = useState([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const loaderRef = useRef(null);
+  const pageRef = useRef(1);
 
   useEffect(() => {
     const next = allItems.slice(0, batchSize);
     setVisible(next);
     setHasMore(allItems.length > batchSize);
     setPage(1);
+    pageRef.current = 1;
   }, [allItems, batchSize]);
-
-  const loadMore = useCallback(() => {
-    const nextPage = page + 1;
-    const end = nextPage * batchSize;
-    const next = allItems.slice(0, end);
-    setVisible(next);
-    setPage(nextPage);
-    setHasMore(end < allItems.length);
-  }, [allItems, page, batchSize]);
 
   useEffect(() => {
     const el = loaderRef.current;
     if (!el || !hasMore) return;
+
     const obs = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && hasMore) loadMore();
-    }, { rootMargin: '400px' });
+      if (entry.isIntersecting) {
+        const nextPage = pageRef.current + 1;
+        const end = nextPage * batchSize;
+        const next = allItems.slice(0, end);
+        setVisible(next);
+        setPage(nextPage);
+        pageRef.current = nextPage;
+        setHasMore(end < allItems.length);
+      }
+    }, { rootMargin: '600px' });
+
     obs.observe(el);
     return () => obs.disconnect();
-  }, [hasMore, loadMore]);
+  }, [hasMore, allItems, batchSize]);
 
   return { visible, hasMore, loaderRef };
 }
