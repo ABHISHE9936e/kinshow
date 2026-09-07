@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 import MediaCard from '../components/MediaCard';
-import { MOVIES, fetchAllMoviePosters } from '../api';
+import { MOVIES } from '../api';
 import { SkeletonCards } from '../components/Skeletons';
 import { SEO } from '../components/SEO';
 
 const TABS = { popular: 'Popular', top_rated: 'Top Rated', new: 'New Releases (2023+)' };
 
-function getMoviesForTab(tab, posters) {
+function getMoviesForTab(tab) {
   let result = [...MOVIES];
   if (tab === 'top_rated') result.sort((a, b) => (b.vote_average || 0) - (a.vote_average || 0));
   else if (tab === 'new') result = result.filter(m => parseInt(m.year) >= 2023);
   else result.sort((a, b) => (b.vote_average || 0) - (a.vote_average || 0));
-  return result.map(m => ({ ...m, poster: posters[m.id] || null, media_type: 'movie' }));
+  return result.map(m => ({ ...m, media_type: 'movie' }));
 }
 
 export default function Movies() {
@@ -21,21 +21,10 @@ export default function Movies() {
 
   useEffect(() => {
     setLoading(true);
-    fetchAllMoviePosters().then(posters => {
-      setAllItems(getMoviesForTab(tab, posters));
-      setLoading(false);
-    }).catch(() => {
-      setAllItems(getMoviesForTab(tab, {}));
+    requestAnimationFrame(() => {
+      setAllItems(getMoviesForTab(tab));
       setLoading(false);
     });
-  }, []);
-
-  useEffect(() => {
-    if (!loading) {
-      fetchAllMoviePosters().then(posters => {
-        setAllItems(getMoviesForTab(tab, posters));
-      });
-    }
   }, [tab]);
 
   return (
