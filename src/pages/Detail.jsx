@@ -8,6 +8,7 @@ import MediaCard from '../components/MediaCard';
 import { SkeletonDetail } from '../components/Skeletons';
 import { PosterImg, makePoster } from '../utils/poster';
 import { SEO, StructuredData, movieSchema, tvSchema, breadcrumbSchema } from '../components/SEO';
+import { addRecent } from '../utils/cookies';
 
 export default function Detail() {
   const { type, id } = useParams();
@@ -29,6 +30,7 @@ export default function Detail() {
       tvmazeShow(id).then(d => {
         if (d) {
           setData(d);
+          addRecent({ id: d.id, media_type: 'tv', title: d.title || d.name, poster: d.poster || d.poster_path });
           tvmazeSeasons(d.tvmazeId || id).then(sea => {
             setSeasons(sea);
             if (sea.length > 0) {
@@ -40,7 +42,10 @@ export default function Detail() {
       });
     } else {
       const movie = MOVIES.find(m => m.id === id || String(m.id) === String(id));
-      if (movie) setData({ ...movie, media_type: 'movie', cast: [], crew: [] });
+      if (movie) {
+        setData({ ...movie, media_type: 'movie', cast: [], crew: [] });
+        addRecent({ id: movie.id, media_type: 'movie', title: movie.title, poster: movie.poster_path });
+      }
       setLoading(false);
     }
   }, [type, id]);

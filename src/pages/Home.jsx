@@ -1,5 +1,6 @@
 import Hero from '../components/Hero';
 import ContentRail from '../components/ContentRail';
+import RecentlyViewed from '../components/RecentlyViewed';
 import { useState, useEffect } from 'react';
 import { tvmazeMultipleShows, MOVIES } from '../api';
 import { SEO, websiteSchema, StructuredData } from '../components/SEO';
@@ -35,6 +36,7 @@ export default function Home() {
       <SEO title="Kinshow" description="Discover movies and TV shows. Explore ratings, cast, reviews, and find where to stream." url="https://kinshow.vercel.app/" />
       <StructuredData data={websiteSchema()} />
       <Hero />
+      <RecentlyViewed />
       <div className="rails">
         <ContentRail title="Popular Movies" items={movieItems.items} loading={movieItems.loading} />
         <ContentRail title="Trending TV Shows" items={trendingTv.items.map(s => ({ ...s, media_type: 'tv' }))} loading={trendingTv.loading} />
