@@ -1,7 +1,7 @@
 const TVMAZE = 'https://api.tvmaze.com';
 const TVMAZE_KEY = 'ef2igMeJwNOOzyXM_GPKpbMDpHgfXtat';
 const OMDB_KEY = 'b90dd268';
-const OMDB = 'http://www.omdbapi.com';
+const OMDB = 'https://www.omdbapi.com';
 const PRE = 'lg_';
 const TTL = 24 * 60 * 60 * 1000;
 
