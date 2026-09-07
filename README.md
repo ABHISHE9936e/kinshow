@@ -177,7 +177,7 @@ This project is for educational purposes only. All movie and TV show data, image
 
 ## 📧 Contact
 
-**Kiinshuk** — [kiinshuk@gmail.com](mailto:kiinshuk@gmail.com)
+**Kiinshuk** — [kinshuksharma2024@gmail.com](mailto:kinshuksharma2024@gmail.com)
 
 Project Link: [https://github.com/kiinshuk/kinshow](https://github.com/kiinshuk/kinshow)
 

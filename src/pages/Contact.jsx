@@ -15,7 +15,7 @@ export default function Contact() {
         <section className="legal-section">
           <h2>Email</h2>
           <p>For general inquiries, bug reports, or feedback:</p>
-          <p><a href="mailto:kiinshuk@gmail.com" className="contact-email">kiinshuk@gmail.com</a></p>
+          <p><a href="mailto:kinshuksharma2024@gmail.com" className="contact-email">kinshuksharma2024@gmail.com</a></p>
         </section>
 
         <section className="legal-section">
