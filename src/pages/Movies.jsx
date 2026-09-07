@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import MediaCard from '../components/MediaCard';
-import { MOVIES } from '../api';
+import { MOVIES, getMoviePoster } from '../api';
 import { SkeletonCards } from '../components/Skeletons';
 import { SEO } from '../components/SEO';
 import { useInfiniteScroll } from '../hooks/useInfiniteScroll';
@@ -15,14 +15,17 @@ export default function Movies() {
 
   useEffect(() => {
     setLoading(true);
-    setTimeout(() => {
-      let result = [...MOVIES];
-      if (tab === 'top_rated') result.sort((a, b) => (b.vote_average || 0) - (a.vote_average || 0));
-      else if (tab === 'new') result = result.filter(m => parseInt(m.year) >= 2023);
-      else result.sort((a, b) => (b.vote_average || 0) - (a.vote_average || 0));
-      setAllItems(result.map(m => ({ ...m, media_type: 'movie' })));
-      setLoading(false);
-    }, 300);
+    let result = [...MOVIES];
+    if (tab === 'top_rated') result.sort((a, b) => (b.vote_average || 0) - (a.vote_average || 0));
+    else if (tab === 'new') result = result.filter(m => parseInt(m.year) >= 2023);
+    else result.sort((a, b) => (b.vote_average || 0) - (a.vote_average || 0));
+    
+    const movieList = result.map(m => ({ ...m, media_type: 'movie' }));
+    Promise.all(movieList.map(async (m) => {
+      const poster = await getMoviePoster(m.id);
+      return { ...m, poster_path: poster };
+    })).then(items => { setAllItems(items); setLoading(false); })
+      .catch(() => { setAllItems(movieList); setLoading(false); });
   }, [tab]);
 
   return (
