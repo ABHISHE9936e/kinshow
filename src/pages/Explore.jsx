@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { tvmazeSearch, MOVIES, getMoviePoster } from '../api';
+import { tvmazeSearch, MOVIES } from '../api';
 import MediaCard from '../components/MediaCard';
 import { SkeletonCards } from '../components/Skeletons';
 import { SEO } from '../components/SEO';
@@ -36,22 +36,13 @@ export default function Explore() {
       const filteredMovies = MOVIES.filter(m =>
         m.genres?.some(g => g.name === selectedGenre)
       ).map(m => ({ ...m, media_type: 'movie' }));
-      
-      Promise.all(filteredMovies.map(async (m) => {
-        const poster = await getMoviePoster(m.id);
-        return { ...m, poster_path: poster };
-      })).then(items => setMovieItems({ items, loading: false }));
+      setMovieItems({ items: filteredMovies, loading: false });
 
       const tvQueries = TV_BY_GENRE[selectedGenre] || [];
       Promise.all(tvQueries.map(q => tvmazeSearch(q).then(shows => shows[0] || null)))
         .then(results => setTvItems({ items: results.filter(Boolean).map(s => ({ ...s, media_type: 'tv' })), loading: false }));
     } else {
-      const defaultMovies = MOVIES.slice(0, 12).map(m => ({ ...m, media_type: 'movie' }));
-      Promise.all(defaultMovies.map(async (m) => {
-        const poster = await getMoviePoster(m.id);
-        return { ...m, poster_path: poster };
-      })).then(items => setMovieItems({ items, loading: false }));
-      
+      setMovieItems({ items: MOVIES.slice(0, 12).map(m => ({ ...m, media_type: 'movie' })), loading: false });
       const tvQueries = ['Breaking Bad', 'Game of Thrones', 'Stranger Things', 'The Witcher', 'Chernobyl', 'Severance', 'Squid Game', 'The Mandalorian'];
       Promise.all(tvQueries.map(q => tvmazeSearch(q).then(shows => shows[0] || null)))
         .then(results => setTvItems({ items: results.filter(Boolean).map(s => ({ ...s, media_type: 'tv' })), loading: false }));
