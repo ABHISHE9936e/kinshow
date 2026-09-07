@@ -325,3 +325,29 @@ export async function getMoviePoster(imdbId, existingPoster) {
   save(ck, poster);
   return poster;
 }
+
+// Batch-fetch posters for all MOVIES — cached in localStorage, ~60 API calls/day max
+export async function fetchAllMoviePosters() {
+  const cached = {};
+  const missing = [];
+  for (const m of MOVIES) {
+    const ck = 'poster_' + m.id;
+    const hit = cache(ck);
+    if (hit !== undefined) cached[m.id] = hit;
+    else missing.push(m);
+  }
+  if (missing.length === 0) return cached;
+  const batchSize = 5;
+  for (let i = 0; i < missing.length; i += batchSize) {
+    const batch = missing.slice(i, i + batchSize);
+    const results = await Promise.all(batch.map(async (m) => {
+      const d = await omdbFetch({ i: m.id });
+      const poster = d?.Poster && d.Poster !== 'N/A' ? d.Poster : null;
+      save('poster_' + m.id, poster);
+      return { id: m.id, poster };
+    }));
+    for (const r of results) cached[r.id] = r.poster;
+    if (i + batchSize < missing.length) await new Promise(res => setTimeout(res, 250));
+  }
+  return cached;
+}
