@@ -55,8 +55,7 @@ export async function omdbSearch(query) {
   const results = (d.Search || []).map(m => ({
     id: m.imdbID, imdbID: m.imdbID,
     title: m.Title, name: m.Title,
-    overview: '', poster_path: m.Poster !== 'N/A' ? m.Poster : null,
-    poster: m.Poster !== 'N/A' ? m.Poster : null,
+    overview: '', poster_path: null, poster: null,
     vote_average: 0, rating: 0,
     year: m.Year || '', release_date: '',
     runtime: 0, genres: [], genre_ids: [],

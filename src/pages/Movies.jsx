@@ -48,7 +48,7 @@ export default function Movies() {
     const terms = getSearchBatch(1);
     Promise.all(terms.map(t => omdbSearch(t)))
       .then(results => {
-        const movies = results.flat().filter(m => m.poster_path);
+        const movies = results.flat();
         const unique = [...new Map(movies.map(m => [m.id, m])).values()];
         setAllItems(unique);
         setLoading(false);
@@ -65,7 +65,7 @@ export default function Movies() {
     if (terms.length === 0) { setHasMore(false); setLoadingMore(false); loadingRef.current = false; return; }
     Promise.all(terms.map(t => omdbSearch(t)))
       .then(results => {
-        const movies = results.flat().filter(m => m.poster_path);
+        const movies = results.flat();
         const unique = [...new Map(movies.map(m => [m.id, m])).values()];
         setAllItems(prev => {
           const existing = new Set(prev.map(m => m.id));
