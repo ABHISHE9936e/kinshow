@@ -64,7 +64,7 @@ export default function Player() {
         {SERVERS.map((sv, i) => <button key={sv.id} className={`player-server-btn ${i === server ? 'player-server-btn--active' : ''}`} onClick={() => setServer(i)}>{sv.name}</button>)}
       </div>
       <div className="player-container">
-        <iframe key={`${server}-${url}`} src={url} title={title} allow="autoplay; fullscreen; picture-in-picture" allowFullScreen className="player-iframe" sandbox="allow-scripts allow-same-origin allow-popups" />
+        <iframe key={`${server}-${url}`} src={url} title={title} allow="autoplay; fullscreen; picture-in-picture" allowFullScreen className="player-iframe" />
       </div>
     </main>
   );
