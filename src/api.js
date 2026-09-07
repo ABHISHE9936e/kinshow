@@ -5,6 +5,14 @@ const OMDB = 'https://www.omdbapi.com';
 const PRE = 'lg_';
 const TTL = 24 * 60 * 60 * 1000;
 
+// Clear old OMDb search cache on load
+try {
+  for (let i = localStorage.length - 1; i >= 0; i--) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith(PRE + 'omdb_s_')) localStorage.removeItem(key);
+  }
+} catch {}
+
 const cache = (k) => { try { const d = JSON.parse(localStorage.getItem(PRE + k)); if (!d || Date.now() - d.t > TTL) { localStorage.removeItem(PRE + k); return null; } return d.v; } catch { return null; } };
 const save = (k, v) => { try { localStorage.setItem(PRE + k, JSON.stringify({ v, t: Date.now() })); } catch {} };
 
