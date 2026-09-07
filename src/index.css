@@ -736,6 +736,7 @@ ul, ol { list-style: none; }
   transition: all var(--duration) var(--ease);
 }
 .genre-chip:hover { background: var(--surface-hover); border-color: var(--accent); color: var(--text); }
+.genre-chip--active { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
 
 /* ─── FOOTER ──────────────────────────────── */
 .footer { border-top: 1px solid var(--border); padding: 48px 24px 24px; margin-top: auto; background: var(--bg); position: relative; z-index: 10; }
