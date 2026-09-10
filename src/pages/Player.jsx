@@ -50,19 +50,37 @@ export default function Player() {
 
   if (!loc) return <main className="page player-page"><div className="empty-state"><h3>No content selected</h3><p>Go back and select something to watch.</p></div></main>;
 
-  const { type = 'movie', id, title, imdbId, tvmazeId, season, episode } = loc;
+  const { type = 'movie', id, title, imdbId, tvmazeId, season = 1, episode = 1 } = loc;
   const effectiveId = (imdbId && imdbId.startsWith('tt')) ? imdbId : (id || imdbId || tvmazeId);
   const url = SERVERS[server].build(type, effectiveId, title, season, episode);
+
+  const isTV = type === 'tv';
+  const ep = parseInt(episode) || 1;
+  const sn = parseInt(season) || 1;
+
+  const goEp = (newEp, newSn) => {
+    const next = { ...loc, season: newSn, episode: newEp };
+    setLoc(next);
+    localStorage.setItem('lg_lastViewed', JSON.stringify(next));
+    setServer(0);
+  };
 
   return (
     <main className="page player-page">
       <div className="player-header">
         <button className="btn btn--ghost" onClick={() => navigate(-1)}>← Back</button>
-        <h2 className="player-title">{title}{type === 'tv' && season ? ` — S${String(season).padStart(2, '0')}E${String(episode || 1).padStart(2, '0')}` : ''}</h2>
+        <h2 className="player-title">{title}{isTV ? ` — S${String(sn).padStart(2, '0')}E${String(ep).padStart(2, '0')}` : ''}</h2>
       </div>
       <div className="player-servers">
         {SERVERS.map((sv, i) => <button key={sv.id} className={`player-server-btn ${i === server ? 'player-server-btn--active' : ''}`} onClick={() => setServer(i)}>{sv.name}</button>)}
       </div>
+      {isTV && (
+        <div className="player-ep-nav">
+          <button className="btn btn--ghost" disabled={sn <= 1 && ep <= 1} onClick={() => goEp(ep > 1 ? ep - 1 : 1, ep > 1 ? sn : Math.max(1, sn - 1))}>← Previous</button>
+          <span className="player-ep-label">S{String(sn).padStart(2, '0')}E{String(ep).padStart(2, '0')}</span>
+          <button className="btn btn--ghost" onClick={() => goEp(ep + 1, sn)}>Next →</button>
+        </div>
+      )}
       <div className="player-container">
         <iframe key={`${server}-${url}`} src={url} title={title} allow="autoplay; fullscreen; picture-in-picture" allowFullScreen className="player-iframe" />
       </div>
