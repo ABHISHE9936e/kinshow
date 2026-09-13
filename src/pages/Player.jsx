@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { SEO, StructuredData, videoSchema } from '../components/SEO';
 
 const SERVERS = [
   { id: 'vidsrc', name: 'VidSrc', build: (type, imdbId, title, season, episode) => {
@@ -62,6 +63,13 @@ export default function Player() {
 
   return (
     <main className="page player-page">
+      <SEO
+        title={`Watch ${title}${isTV ? ` S${String(sn).padStart(2, '0')}E${String(ep).padStart(2, '0')}` : ''}`}
+        description={`Watch ${title} ${isTV ? `Season ${sn} Episode ${ep}` : 'full movie'} online for free. Stream now on Kinshow.`}
+        url={`https://kinshow.vercel.app/player`}
+        type="video.other"
+      />
+      <StructuredData data={videoSchema(title, type, effectiveId, sn, ep)} />
       <div className="player-header">
         <button className="btn btn--ghost" onClick={() => navigate(-1)}>← Back</button>
         <h2 className="player-title">{title}{isTV ? ` — S${String(sn).padStart(2, '0')}E${String(ep).padStart(2, '0')}` : ''}</h2>

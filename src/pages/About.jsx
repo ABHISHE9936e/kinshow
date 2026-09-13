@@ -1,10 +1,30 @@
 import { Link } from 'react-router-dom';
-import { SEO } from '../components/SEO';
+import { SEO, StructuredData, faqSchema, organizationSchema, breadcrumbSchema } from '../components/SEO';
+
+const FAQ_DATA = [
+  { question: 'What is Kinshow?', answer: 'Kinshow is a free cinema discovery platform that helps you find movies and TV shows. We provide ratings, cast information, reviews, and streaming availability all in one place.' },
+  { question: 'Is Kinshow free to use?', answer: 'Yes, Kinshow is completely free to use. We do not charge any fees for browsing movies, TV shows, or using features like the watchlist and viewing history.' },
+  { question: 'Does Kinshow host any content?', answer: 'No, Kinshow does not host, stream, or distribute any copyrighted content. We aggregate data from third-party APIs (TVmaze, OMDb) and redirect to authorized streaming services.' },
+  { question: 'How do I create a watchlist on Kinshow?', answer: 'Simply click the "+ Add to List" button on any movie or TV show detail page. Your watchlist is saved locally in your browser and accessible from the My List page.' },
+  { question: 'What data sources does Kinshow use?', answer: 'Kinshow uses TVmaze API for TV show data, OMDb API for movie ratings and posters, and IMDb for identification. All data belongs to their respective owners.' },
+  { question: 'Is Kinshow available on mobile?', answer: 'Yes, Kinshow is fully responsive and works on all devices including smartphones, tablets, and desktop browsers.' },
+  { question: 'How do I report a bug or suggest a feature?', answer: 'You can contact us via email at kinshuksharma2024@gmail.com or open an issue on our GitHub repository at github.com/kiinshuk/kinshow.' }
+];
 
 export default function About() {
   return (
     <main className="page">
-      <SEO title="About" description="Learn about Kinshow — your go-to platform for discovering movies and TV shows." url="https://kinshow.vercel.app/about" />
+      <SEO
+        title="About"
+        description="Learn about Kinshow — a free cinema discovery platform for movies and TV shows. Browse ratings, cast, reviews, and find streaming links. No sign-up required."
+        url="https://kinshow.vercel.app/about"
+      />
+      <StructuredData data={faqSchema(FAQ_DATA)} />
+      <StructuredData data={organizationSchema()} />
+      <StructuredData data={breadcrumbSchema([
+        { name: 'Home', url: 'https://kinshow.vercel.app/' },
+        { name: 'About', url: 'https://kinshow.vercel.app/about' }
+      ])} />
       <div className="legal-page">
         <h1 className="legal-title">About Kinshow</h1>
 
@@ -57,6 +77,16 @@ export default function About() {
         <section className="legal-section">
           <h2>Get in Touch</h2>
           <p>Have questions, suggestions, or feedback? Visit our <Link to="/contact">Contact page</Link> to reach out.</p>
+        </section>
+
+        <section className="legal-section">
+          <h2>Frequently Asked Questions</h2>
+          {FAQ_DATA.map((q, i) => (
+            <div key={i} style={{ marginBottom: '16px' }}>
+              <h3 style={{ fontSize: '15px', marginBottom: '4px' }}>{q.question}</h3>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>{q.answer}</p>
+            </div>
+          ))}
         </section>
       </div>
     </main>

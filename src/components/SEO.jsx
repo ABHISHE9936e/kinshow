@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 const SITE = 'https://kinshow.vercel.app';
 const DEFAULT_DESC = 'Discover movies and TV shows on Kinshow. Explore ratings, cast, reviews, and find where to stream.';
 
-export function SEO({ title, description, image, url, type = 'website' }) {
+export function SEO({ title, description, image, url, type = 'website', schema }) {
   const t = title ? `${title} | Kinshow` : 'Kinshow - Cinema Discovery';
   const d = description || DEFAULT_DESC;
   const u = url || SITE;
@@ -14,15 +14,26 @@ export function SEO({ title, description, image, url, type = 'website' }) {
       <title>{t}</title>
       <meta name="description" content={d} />
       <link rel="canonical" href={u} />
+      <meta name="robots" content="index, follow" />
+      <meta name="theme-color" content="#c8102e" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+      <meta name="format-detection" content="telephone=no" />
+      <link rel="alternate" hrefLang="en-in" href={u} />
+      <link rel="alternate" hrefLang="x-default" href={u} />
 
       <meta property="og:type" content={type} />
       <meta property="og:title" content={t} />
       <meta property="og:description" content={d} />
       <meta property="og:image" content={img} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:url" content={u} />
       <meta property="og:site_name" content="Kinshow" />
+      <meta property="og:locale" content="en_IN" />
 
       <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:site" content="@kinshow" />
       <meta name="twitter:title" content={t} />
       <meta name="twitter:description" content={d} />
       <meta name="twitter:image" content={img} />
@@ -79,6 +90,36 @@ export function tvSchema(show) {
   };
 }
 
+export function videoSchema(title, type, imdbId, season, episode) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: type === 'tv' ? `${title} S${season}E${episode}` : title,
+    description: `Watch ${title} ${type === 'tv' ? `Season ${season} Episode ${episode}` : 'full movie'} online for free.`,
+    embedUrl: `${SITE}/player`,
+    uploadDate: new Date().toISOString(),
+    thumbnailUrl: `${SITE}/og-default.png`,
+    contentUrl: imdbId ? `https://www.imdb.com/title/${imdbId}` : undefined
+  };
+}
+
+export function organizationSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Kinshow',
+    url: SITE,
+    logo: `${SITE}/og-default.png`,
+    description: DEFAULT_DESC,
+    sameAs: ['https://github.com/kiinshuk/kinshow'],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      email: 'kinshuksharma2024@gmail.com',
+      contactType: 'customer service'
+    }
+  };
+}
+
 export function websiteSchema() {
   return {
     '@context': 'https://schema.org',
@@ -86,6 +127,7 @@ export function websiteSchema() {
     name: 'Kinshow',
     url: SITE,
     description: DEFAULT_DESC,
+    publisher: { '@type': 'Organization', name: 'Kinshow' },
     potentialAction: {
       '@type': 'SearchAction',
       target: `${SITE}/explore?q={search_term_string}`,
@@ -103,6 +145,21 @@ export function breadcrumbSchema(items) {
       position: i + 1,
       name: item.name,
       item: item.url
+    }))
+  };
+}
+
+export function faqSchema(questions) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: questions.map(q => ({
+      '@type': 'Question',
+      name: q.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: q.answer
+      }
     }))
   };
 }

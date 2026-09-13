@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import MediaCard from '../components/MediaCard';
 import { tvmazeShowsByPage } from '../api';
 import { SkeletonCards } from '../components/Skeletons';
-import { SEO } from '../components/SEO';
+import { SEO, StructuredData, breadcrumbSchema } from '../components/SEO';
 
 const TABS = {
   popular: { label: 'Popular', pages: [1, 2, 3] },
@@ -30,7 +30,11 @@ export default function TVShows() {
 
   return (
     <main className="page">
-      <SEO title="TV Shows" description="Series worth your time. Browse popular, top rated, and currently airing TV shows." url="https://kinshow.vercel.app/tv" />
+      <SEO title="TV Shows" description="Browse trending TV shows with episode guides, cast info, and streaming links. Find popular, top rated, and currently airing series on Kinshow." url="https://kinshow.vercel.app/tv" />
+      <StructuredData data={breadcrumbSchema([
+        { name: 'Home', url: 'https://kinshow.vercel.app/' },
+        { name: 'TV Shows', url: 'https://kinshow.vercel.app/tv' }
+      ])} />
       <div className="page-header">
         <h1 className="page-title">TV Shows</h1>
         <p className="page-subtitle">Series worth your time</p>

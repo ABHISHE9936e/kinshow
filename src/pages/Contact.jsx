@@ -1,9 +1,25 @@
-import { SEO } from '../components/SEO';
+import { SEO, StructuredData, faqSchema, breadcrumbSchema } from '../components/SEO';
+
+const FAQ_DATA = [
+  { question: 'How do I contact Kinshow support?', answer: 'You can reach us via email at kinshuksharma2024@gmail.com or by opening an issue on our GitHub repository at github.com/kiinshuk/kinshow.' },
+  { question: 'How do I report a bug on Kinshow?', answer: 'Please email us with steps to reproduce the bug, expected behavior, and screenshots if possible. You can also open a GitHub issue for faster resolution.' },
+  { question: 'Can I suggest a new feature for Kinshow?', answer: 'Absolutely! We welcome feature suggestions. Email us or create a GitHub issue describing the feature you\'d like to see and why it would be useful.' },
+  { question: 'What is the response time for inquiries?', answer: 'We aim to respond to all inquiries within 48 hours. For urgent issues, using GitHub Issues provides faster resolution.' }
+];
 
 export default function Contact() {
   return (
     <main className="page">
-      <SEO title="Contact Us" description="Get in touch with the Kinshow team. Send feedback, report bugs, or suggest new features." url="https://kinshow.vercel.app/contact" />
+      <SEO
+        title="Contact Us"
+        description="Get in touch with the Kinshow team. Send feedback, report bugs, suggest features, or ask questions. We respond within 48 hours."
+        url="https://kinshow.vercel.app/contact"
+      />
+      <StructuredData data={faqSchema(FAQ_DATA)} />
+      <StructuredData data={breadcrumbSchema([
+        { name: 'Home', url: 'https://kinshow.vercel.app/' },
+        { name: 'Contact', url: 'https://kinshow.vercel.app/contact' }
+      ])} />
       <div className="legal-page">
         <h1 className="legal-title">Contact Us</h1>
 
@@ -47,6 +63,16 @@ export default function Contact() {
         <section className="legal-section">
           <h2>Response Time</h2>
           <p>We aim to respond to all inquiries within 48 hours. For urgent issues, please use GitHub Issues for faster resolution.</p>
+        </section>
+
+        <section className="legal-section">
+          <h2>Frequently Asked Questions</h2>
+          {FAQ_DATA.map((q, i) => (
+            <div key={i} style={{ marginBottom: '16px' }}>
+              <h3 style={{ fontSize: '15px', marginBottom: '4px' }}>{q.question}</h3>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>{q.answer}</p>
+            </div>
+          ))}
         </section>
       </div>
     </main>

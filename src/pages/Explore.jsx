@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { tvmazeSearch, MOVIES } from '../api';
 import MediaCard from '../components/MediaCard';
 import { SkeletonCards } from '../components/Skeletons';
-import { SEO } from '../components/SEO';
+import { SEO, StructuredData, breadcrumbSchema } from '../components/SEO';
 
 const GENRES = ['Action', 'Comedy', 'Drama', 'Horror', 'Sci-Fi', 'Thriller', 'Romance', 'Animation', 'Adventure', 'Crime', 'Fantasy', 'Mystery', 'War', 'Documentary'];
 
@@ -51,7 +51,11 @@ export default function Explore() {
 
   return (
     <main className="page">
-      <SEO title="Explore" description="Browse by genre and discover something new. Movies and TV shows for every taste." url="https://kinshow.vercel.app/explore" />
+      <SEO title="Explore" description="Explore movies and TV shows by genre. Find Action, Comedy, Drama, Horror, Sci-Fi, Thriller, and more. Discover your next favorite title on Kinshow." url="https://kinshow.vercel.app/explore" />
+      <StructuredData data={breadcrumbSchema([
+        { name: 'Home', url: 'https://kinshow.vercel.app/' },
+        { name: 'Explore', url: 'https://kinshow.vercel.app/explore' }
+      ])} />
       <div className="page-header">
         <h1 className="page-title">Explore</h1>
         <p className="page-subtitle">Browse by genre and discover something new</p>
