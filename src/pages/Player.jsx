@@ -23,6 +23,11 @@ const SERVERS = [
     if (type === 'tv') return `https://peachify.top/embed/tv/${id}/${season || 1}/${episode || 1}`;
     return `https://peachify.top/embed/movie/${id}`;
   }},
+  { id: 'vidfast', name: 'VidFast', build: (type, imdbId, title, season, episode) => {
+    const id = imdbId || '';
+    if (type === 'tv') return `https://vidfast.vc/tv/${id}/${season || 1}/${episode || 1}`;
+    return `https://vidfast.vc/movie/${id}`;
+  }},
 ];
 
 export default function Player() {
