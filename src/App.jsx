@@ -14,6 +14,8 @@ import Explore from './pages/Explore';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Privacy from './pages/Privacy';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 
 function AppInner() {
   const { list } = useWatchlist();
@@ -32,6 +34,8 @@ function AppInner() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/privacy" element={<Privacy />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:slug" element={<BlogPost />} />
       </Routes>
       <footer className="footer">
         <div className="footer-inner">
@@ -53,6 +57,7 @@ function AppInner() {
               <h4 className="footer-heading">Company</h4>
               <ul className="footer-links">
                 <li><a href="/about">About</a></li>
+                <li><a href="/blog">Blog</a></li>
                 <li><a href="/contact">Contact</a></li>
                 <li><a href="/privacy">Privacy Policy</a></li>
               </ul>

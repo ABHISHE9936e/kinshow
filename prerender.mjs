@@ -84,6 +84,17 @@ const routes = [
       <h1 style="position:absolute;left:-9999px">Privacy Policy</h1>
       <p style="position:absolute;left:-9999px">Kinshow privacy policy. Learn how we collect, use, and protect your information when you visit our website.</p>
       <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Privacy Policy","url":"https://kinshow.vercel.app/privacy","description":"Kinshow privacy policy"}</script>`
+  },
+  {
+    path: '/blog',
+    title: 'Blog - Kinshow',
+    description: 'Read the latest articles about movies, TV shows, and streaming on Kinshow. Guides, recommendations, lists, and tips for finding what to watch.',
+    canonical: 'https://kinshow.vercel.app/blog',
+    type: 'website',
+    content: `
+      <h1 style="position:absolute;left:-9999px">Kinshow Blog - Movie & TV Articles</h1>
+      <p style="position:absolute;left:-9999px">Read articles about movies, TV shows, ratings, and cinema discovery on Kinshow. Find guides, recommendations, and lists.</p>
+      <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kinshow.vercel.app/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://kinshow.vercel.app/blog"}]}</script>`
   }
 ];
 

@@ -7,6 +7,12 @@
   <url><loc>https://kinshow.vercel.app/about</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://kinshow.vercel.app/contact</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://kinshow.vercel.app/privacy</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://kinshow.vercel.app/blog</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kinshow.vercel.app/blog/best-movies-to-watch-right-now</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://kinshow.vercel.app/blog/best-tv-shows-binge-worthy</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://kinshow.vercel.app/blog/movie-ratings-explained</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://kinshow.vercel.app/blog/marvel-mcu-movies-ranked</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://kinshow.vercel.app/blog/how-to-find-movie-to-watch</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://kinshow.vercel.app/detail/movie/tt0111161</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://kinshow.vercel.app/detail/movie/tt0068646</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://kinshow.vercel.app/detail/movie/tt0468569</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
