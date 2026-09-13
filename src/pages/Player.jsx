@@ -10,14 +10,6 @@ const SERVERS = [
     if (imdbId && imdbId.startsWith('tt')) return `https://vidsrc.pm/embed/movie?imdb=${imdbId}`;
     return `https://vidsrc.pm/embed/movie?tmdb=${imdbId}`;
   }},
-  { id: 'vidsrc-sbs', name: 'VidSrc.sbs', build: (type, imdbId, title, season, episode) => {
-    if (type === 'tv') {
-      if (imdbId && imdbId.startsWith('tt')) return `https://vidsrc.sbs/embed/tv?imdb=${imdbId}&season=${season || 1}&episode=${episode || 1}`;
-      return `https://vidsrc.sbs/embed/tv?tmdb=${imdbId}&season=${season || 1}&episode=${episode || 1}`;
-    }
-    if (imdbId && imdbId.startsWith('tt')) return `https://vidsrc.sbs/embed/movie?imdb=${imdbId}`;
-    return `https://vidsrc.sbs/embed/movie?tmdb=${imdbId}`;
-  }},
   { id: 'vidcore', name: 'VidCore', build: (type, imdbId, title, season, episode) => {
     if (type === 'tv') {
       if (imdbId && imdbId.startsWith('tt')) return `https://vidcore.org/embed/tv?imdb=${imdbId}&season=${season || 1}&episode=${episode || 1}`;
@@ -25,13 +17,6 @@ const SERVERS = [
     }
     if (imdbId && imdbId.startsWith('tt')) return `https://vidcore.org/embed/movie?imdb=${imdbId}`;
     return `https://vidcore.org/embed/movie?tmdb=${imdbId}`;
-  }},
-  { id: 'multiembed', name: 'MultiEmbed', build: (type, imdbId, title, season, episode) => {
-    if (imdbId && imdbId.startsWith('tt')) {
-      if (type === 'tv') return `https://multiembed.mov/?video_id=${imdbId}&season=${season || 1}&episode=${episode || 1}`;
-      return `https://multiembed.mov/?video_id=${imdbId}`;
-    }
-    return `https://multiembed.mov/?video_id=${imdbId}`;
   }},
 ];
 
