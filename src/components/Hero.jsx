@@ -38,7 +38,9 @@ export default function Hero() {
 
   return (
     <section className={`hero ${fading ? 'hero--fading' : ''}`}>
-      <div className="hero-bg" style={{ background: poster ? `url(${poster}) right center / cover no-repeat` : 'linear-gradient(135deg, #12141c 0%, #1a1a2e 50%, #0f3460 100%)' }} />
+      <div className="hero-bg">
+        {poster && <img src={poster} alt="" className="hero-bg-img" />}
+      </div>
       <div className="hero-gradient" />
       <div className="hero-content">
         <div className="hero-info">

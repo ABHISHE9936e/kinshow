@@ -208,16 +208,23 @@ ul, ol { list-style: none; }
 }
 .hero-bg {
   position: absolute; inset: 0;
-  background-size: cover; background-position: center top;
+  background: linear-gradient(135deg, #12141c 0%, #1a1a2e 50%, #0f3460 100%);
+  overflow: hidden;
+}
+.hero-bg-img {
+  position: absolute; right: -5%; top: 50%; transform: translateY(-50%);
+  height: 110%; width: auto; min-width: 50%;
+  object-fit: cover; object-position: center;
+  filter: brightness(0.7) saturate(1.2);
   transition: opacity 0.5s var(--ease);
 }
+.hero--fading .hero-bg-img { opacity: 0; }
 .hero-gradient {
   position: absolute; inset: 0;
   background:
     linear-gradient(to right, var(--bg) 0%, rgba(8,9,13,0.95) 30%, rgba(8,9,13,0.4) 60%, rgba(8,9,13,0.6) 100%),
     linear-gradient(to top, var(--bg) 0%, rgba(8,9,13,0.3) 40%, rgba(8,9,13,0.1) 70%, rgba(8,9,13,0.4) 100%);
 }
-.hero--fading .hero-bg { opacity: 0; }
 .hero-content {
   position: relative; z-index: 2;
   width: 100%; max-width: 1400px; margin: 0 auto;
