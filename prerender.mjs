@@ -7,19 +7,20 @@ const indexHtml = readFileSync(join(DIST, 'index.html'), 'utf-8');
 const routes = [
   {
     path: '/',
-    title: 'Kinshow - Cinema Discovery',
-    description: 'Discover movies and TV shows on Kinshow. Explore ratings, cast, reviews, and find where to stream.',
+    title: 'Kinshow - Cinema Discovery | Movies & TV Shows',
+    description: 'Discover movies and TV shows on Kinshow. Browse ratings, cast, reviews, and find where to stream. Free cinema discovery platform with 80+ curated films and trending series.',
     canonical: 'https://kinshow.vercel.app/',
     type: 'website',
     content: `
       <h1 style="position:absolute;left:-9999px">Kinshow - Discover Movies & TV Shows</h1>
       <p style="position:absolute;left:-9999px">Browse popular movies, trending TV series, new releases, and top rated films. Find cast, ratings, reviews, and streaming links for thousands of titles.</p>
-      <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Kinshow","url":"https://kinshow.vercel.app","description":"Discover movies and TV shows on Kinshow","potentialAction":{"@type":"SearchAction","target":"https://kinshow.vercel.app/explore?q={search_term_string}","query-input":"required name=search_term_string"}}</script>`
+      <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Kinshow","url":"https://kinshow.vercel.app","description":"Discover movies and TV shows on Kinshow","publisher":{"@type":"Organization","name":"Kinshow"},"potentialAction":{"@type":"SearchAction","target":"https://kinshow.vercel.app/explore?q={search_term_string}","query-input":"required name=search_term_string"}}</script>
+      <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Kinshow","url":"https://kinshow.vercel.app","logo":"https://kinshow.vercel.app/og-default.png","description":"Free cinema discovery platform","sameAs":["https://github.com/kiinshuk/kinshow"],"contactPoint":{"@type":"ContactPoint","email":"kinshuksharma2024@gmail.com","contactType":"customer service"}}</script>`
   },
   {
     path: '/movies',
     title: 'Movies - Kinshow',
-    description: 'Discover films across every genre and era. Browse popular, top rated, and new movie releases on Kinshow.',
+    description: 'Browse 80+ curated movies with ratings, cast info, and streaming links. Find popular, top rated, and new releases. Free movie discovery on Kinshow.',
     canonical: 'https://kinshow.vercel.app/movies',
     type: 'website',
     content: `
@@ -30,7 +31,7 @@ const routes = [
   {
     path: '/tv',
     title: 'TV Shows - Kinshow',
-    description: 'Series worth your time. Browse popular, top rated, and currently airing TV shows on Kinshow.',
+    description: 'Browse trending TV shows with episode guides, cast info, and streaming links. Find popular, top rated, and currently airing series on Kinshow.',
     canonical: 'https://kinshow.vercel.app/tv',
     type: 'website',
     content: `
@@ -41,7 +42,7 @@ const routes = [
   {
     path: '/explore',
     title: 'Explore - Kinshow',
-    description: 'Browse by genre and discover something new. Movies and TV shows for every taste.',
+    description: 'Explore movies and TV shows by genre. Find Action, Comedy, Drama, Horror, Sci-Fi, Thriller, and more. Discover your next favorite title on Kinshow.',
     canonical: 'https://kinshow.vercel.app/explore',
     type: 'website',
     content: `
@@ -52,29 +53,31 @@ const routes = [
   {
     path: '/about',
     title: 'About - Kinshow',
-    description: 'Learn about Kinshow — your go-to platform for discovering movies and TV shows.',
+    description: 'Learn about Kinshow — a free cinema discovery platform for movies and TV shows. Browse ratings, cast, reviews, and find streaming links. No sign-up required.',
     canonical: 'https://kinshow.vercel.app/about',
     type: 'website',
     content: `
       <h1 style="position:absolute;left:-9999px">About Kinshow</h1>
       <p style="position:absolute;left:-9999px">Kinshow is a free cinema discovery platform designed to help you find your next favorite movie or TV show. Browse ratings, cast information, and streaming availability.</p>
-      <script type="application/ld+json">{"@context":"https://schema.org","@type":"AboutPage","name":"About Kinshow","url":"https://kinshow.vercel.app/about","description":"Learn about Kinshow cinema discovery platform"}</script>`
+      <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is Kinshow?","acceptedAnswer":{"@type":"Answer","text":"Kinshow is a free cinema discovery platform that helps you find movies and TV shows."}},{"@type":"Question","name":"Is Kinshow free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes, Kinshow is completely free to use."}},{"@type":"Question","name":"Does Kinshow host any content?","acceptedAnswer":{"@type":"Answer","text":"No, Kinshow does not host, stream, or distribute any copyrighted content."}},{"@type":"Question","name":"How do I create a watchlist on Kinshow?","acceptedAnswer":{"@type":"Answer","text":"Click the Add to List button on any movie or TV show detail page."}},{"@type":"Question","name":"What data sources does Kinshow use?","acceptedAnswer":{"@type":"Answer","text":"Kinshow uses TVmaze API for TV shows, OMDb API for movies, and IMDb for identification."}},{"@type":"Question","name":"Is Kinshow available on mobile?","acceptedAnswer":{"@type":"Answer","text":"Yes, Kinshow is fully responsive and works on all devices."}},{"@type":"Question","name":"How do I report a bug?","acceptedAnswer":{"@type":"Answer","text":"Email us at kinshuksharma2024@gmail.com or open a GitHub issue."}}]}</script>
+      <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kinshow.vercel.app/"},{"@type":"ListItem","position":2,"name":"About","item":"https://kinshow.vercel.app/about"}]}</script>`
   },
   {
     path: '/contact',
     title: 'Contact Us - Kinshow',
-    description: 'Get in touch with the Kinshow team. Send feedback, report bugs, or suggest new features.',
+    description: 'Get in touch with the Kinshow team. Send feedback, report bugs, suggest features, or ask questions. We respond within 48 hours.',
     canonical: 'https://kinshow.vercel.app/contact',
     type: 'website',
     content: `
       <h1 style="position:absolute;left:-9999px">Contact Us</h1>
-      <p style="position:absolute;left:-9999px">Get in touch with the Kinshow team. Email us at kiinshuk@gmail.com or visit our GitHub repository.</p>
-      <script type="application/ld+json">{"@context":"https://schema.org","@type":"ContactPage","name":"Contact Us","url":"https://kinshow.vercel.app/contact","description":"Get in touch with the Kinshow team"}</script>`
+      <p style="position:absolute;left:-9999px">Get in touch with the Kinshow team. Email us at kinshuksharma2024@gmail.com or visit our GitHub repository.</p>
+      <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I contact Kinshow support?","acceptedAnswer":{"@type":"Answer","text":"Email us at kinshuksharma2024@gmail.com or open a GitHub issue."}},{"@type":"Question","name":"How do I report a bug?","acceptedAnswer":{"@type":"Answer","text":"Email us with steps to reproduce or open a GitHub issue."}},{"@type":"Question","name":"Can I suggest a new feature?","acceptedAnswer":{"@type":"Answer","text":"Absolutely! Email us or create a GitHub issue."}},{"@type":"Question","name":"What is the response time?","acceptedAnswer":{"@type":"Answer","text":"We aim to respond within 48 hours."}}]}</script>
+      <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://kinshow.vercel.app/"},{"@type":"ListItem","position":2,"name":"Contact","item":"https://kinshow.vercel.app/contact"}]}</script>`
   },
   {
     path: '/privacy',
     title: 'Privacy Policy - Kinshow',
-    description: 'Kinshow privacy policy. Learn how we collect, use, and protect your data.',
+    description: 'Kinshow privacy policy. Learn how we collect, use, and protect your data. Your privacy is important to us.',
     canonical: 'https://kinshow.vercel.app/privacy',
     type: 'website',
     content: `
