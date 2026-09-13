@@ -34,9 +34,11 @@ export default function Hero() {
   const genres = item.genres?.map(g => g.name).join(' · ') || '';
   const type = item.media_type || 'movie';
 
+  const poster = item.poster || item.image?.original || item.image?.medium || '';
+
   return (
     <section className={`hero ${fading ? 'hero--fading' : ''}`}>
-      <div className="hero-bg" style={{ background: 'linear-gradient(135deg, #12141c 0%, #1a1a2e 50%, #0f3460 100%)' }} />
+      <div className="hero-bg" style={{ background: poster ? `url(${poster}) right center / cover no-repeat` : 'linear-gradient(135deg, #12141c 0%, #1a1a2e 50%, #0f3460 100%)' }} />
       <div className="hero-gradient" />
       <div className="hero-content">
         <div className="hero-info">

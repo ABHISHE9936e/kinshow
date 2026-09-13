@@ -214,8 +214,8 @@ ul, ol { list-style: none; }
 .hero-gradient {
   position: absolute; inset: 0;
   background:
-    linear-gradient(to top, var(--bg) 0%, rgba(8,9,13,0.7) 40%, rgba(8,9,13,0.2) 70%, rgba(8,9,13,0.5) 100%),
-    radial-gradient(ellipse at 30% 80%, rgba(200,16,46,0.06) 0%, transparent 60%);
+    linear-gradient(to right, var(--bg) 0%, rgba(8,9,13,0.95) 30%, rgba(8,9,13,0.4) 60%, rgba(8,9,13,0.6) 100%),
+    linear-gradient(to top, var(--bg) 0%, rgba(8,9,13,0.3) 40%, rgba(8,9,13,0.1) 70%, rgba(8,9,13,0.4) 100%);
 }
 .hero--fading .hero-bg { opacity: 0; }
 .hero-content {
