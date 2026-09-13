@@ -33,11 +33,6 @@ const SERVERS = [
     }
     return `https://multiembed.mov/?video_id=${imdbId}`;
   }},
-  { id: 'vidlink', name: 'VidLink', build: (type, imdbId, title, season, episode) => {
-    const tmdbId = imdbId?.startsWith('tt') ? imdbId.replace('tt', '').replace(/^0+/, '') : imdbId;
-    if (type === 'tv') return `https://vidlink.pro/tv/${tmdbId}/${season || 1}/${episode || 1}`;
-    return `https://vidlink.pro/movie/${tmdbId}`;
-  }},
 ];
 
 export default function Player() {
