@@ -353,7 +353,11 @@ ul, ol { list-style: none; }
   opacity: 0; transition: opacity var(--duration-md) var(--ease);
   display: flex; align-items: flex-end; padding: 14px;
 }
-.card:hover .card-overlay { opacity: 1; }
+.card:hover .card-overlay,
+.card.card--touched .card-overlay,
+.card-overlay.card-overlay--visible {
+  opacity: 1;
+}
 .card-overlay-content { display: flex; flex-direction: column; gap: 6px; }
 .card-overlay-rating { font-size: 13px; font-weight: 600; color: var(--gold); }
 .card-overlay-desc { font-size: 11.5px; color: rgba(255,255,255,0.75); line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
