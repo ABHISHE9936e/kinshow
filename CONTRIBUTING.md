@@ -4,17 +4,18 @@ Thanks for your interest in contributing! Here's how to get started.
 
 ## Getting Started
 
-1. Fork the repository
-2. Clone your fork:
+1. ⭐ Star the repo first — it helps others find the project
+2. Fork the repository
+3. Clone your fork:
    ```bash
    git clone https://github.com/YOUR_USERNAME/kinshow.git
    cd kinshow
    ```
-3. Install dependencies:
+4. Install dependencies:
    ```bash
    npm install
    ```
-4. Start the dev server:
+5. Start the dev server:
    ```bash
    npm run dev
    ```
