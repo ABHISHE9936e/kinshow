@@ -21,7 +21,7 @@ export default function CookieConsent() {
         <div className="cookie-icon">🍪</div>
         <div className="cookie-text">
           <h4>We Value Your Privacy</h4>
-          <p>We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic. By clicking "Accept", you consent to our use of cookies.</p>
+          <p>We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic. By clicking "Accept", you consent to our use of cookies. <a href="/privacy"><b><u>Learn More</u></b></a></p>
         </div>
         <div className="cookie-actions">
           <button className="cookie-btn cookie-btn--accept" onClick={handleAccept}>Accept</button>
