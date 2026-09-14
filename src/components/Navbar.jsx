@@ -72,6 +72,21 @@ export default function Navbar({ watchlistCount }) {
             <div className="search-overlay-input-wrap">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
               <input ref={inputRef} type="text" className="search-overlay-input" placeholder="Search movies, TV shows..." value={query} onChange={e => search(e.target.value)} aria-label="Search" />
+                {query && (
+  <button
+    className="search-overlay-clear"
+    onClick={() => {
+      clearTimeout(timerRef.current);
+      setQuery('');
+      setResults([]);
+      setLoading(false);
+      inputRef.current?.focus();
+    }}
+    aria-label="Clear search"
+  >
+    ×
+  </button>
+)}
               <button className="search-overlay-close" onClick={() => { setSearchOpen(false); setQuery(''); setResults([]); }} aria-label="Close search"><kbd>ESC</kbd></button>
             </div>
             {loading && <div className="search-overlay-status">Searching...</div>}
