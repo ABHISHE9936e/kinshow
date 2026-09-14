@@ -1,29 +1,45 @@
-# Kinshow — Cinema Discovery Platform
+# 🎬 Kinshow — Cinema Discovery Platform
 
-A free movie and TV show discovery platform built with React. Browse 80+ curated films, 250+ TV shows, check ratings, cast info, episode guides, and find where to stream — all in one place.
+A free, open-source movie and TV show discovery platform. Browse 80+ curated films, 250+ TV shows, check ratings, cast info, episode guides, and find where to stream — all in one place.
 
 **Live:** [kinshow.vercel.app](https://kinshow.vercel.app/)  
 **Blog:** [kinshow.vercel.app/blog](https://kinshow.vercel.app/blog)
 
 ---
 
-## Features
+## ✨ Features
 
-- **Movie Discovery** — 80+ curated movies with ratings, cast, reviews, and streaming links
-- **TV Shows** — 250+ shows from TVmaze with full season and episode guides
+### Discovery
+- **80+ Curated Movies** — Top-rated films with ratings, cast, and streaming links
+- **250+ TV Shows** — Full season and episode guides from TVmaze
 - **Smart Search** — Instant search across movies and TV shows
-- **Personal Watchlist** — Save titles to watch later (localStorage, no account needed)
-- **Viewing History** — Track what you've watched
 - **Genre Explorer** — Browse by Action, Comedy, Drama, Horror, Sci-Fi, Thriller, and more
-- **Multi-Server Player** — 4 streaming servers (VidSrc, VidCore, Peachify, VidFast)
-- **Episode Navigation** — Previous/next episode buttons for TV shows
-- **Blog** — Movie guides, recommendations, and lists for SEO
-- **Fully Responsive** — Works on desktop, tablet, and mobile
-- **Dark Theme** — Premium UI with smooth animations
-- **SEO Optimized** — Schema.org, Open Graph, sitemap, prerendered HTML
-- **GDPR Compliant** — Cookie consent banner
 
-## Tech Stack
+### Personalization
+- **Watchlist** — Save titles to watch later (localStorage, no account needed)
+- **Viewing History** — Track what you've watched
+- **Recently Viewed** — Quick access to recently browsed titles
+
+### Player
+- **Multi-Server Streaming** — 4 servers (VidSrc, VidCore, Peachify, VidFast)
+- **Episode Navigation** — Previous/next episode buttons for TV shows
+- **Server Switching** — Change servers mid-session
+
+### SEO & Performance
+- **Schema.org** — Movie, TVSeries, WebSite, Organization, FAQPage, BreadcrumbList, Article, VideoObject
+- **Open Graph & Twitter Cards** — Rich social previews
+- **Pre-rendered HTML** — Search engine optimized
+- **24hr Cache** — Reduced API calls, faster load times
+
+### UX
+- **Fully Responsive** — Desktop, tablet, and mobile
+- **Dark Theme** — Premium UI with smooth animations
+- **Cookie Consent** — GDPR compliant
+- **Blog** — Movie guides, recommendations, and lists
+
+---
+
+## 🛠 Tech Stack
 
 | Technology | Purpose |
 |------------|---------|
@@ -35,7 +51,9 @@ A free movie and TV show discovery platform built with React. Browse 80+ curated
 | OMDb API | Movie Data & Posters |
 | Vercel | Hosting, Analytics & CI/CD |
 
-## Getting Started
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
@@ -72,7 +90,9 @@ npm run build
 npm run build && node prerender.mjs
 ```
 
-## Project Structure
+---
+
+## 📁 Project Structure
 
 ```
 kinshow/
@@ -82,7 +102,7 @@ kinshow/
 ├── src/
 │   ├── components/
 │   │   ├── Navbar.jsx         # Navigation with search
-│   │   ├── Hero.jsx           # Featured content carousel with poster backgrounds
+│   │   ├── Hero.jsx           # Featured content carousel
 │   │   ├── MediaCard.jsx      # Movie/TV show card
 │   │   ├── ContentRail.jsx    # Horizontal scroll section
 │   │   ├── CastCard.jsx       # Actor profile card
@@ -92,13 +112,13 @@ kinshow/
 │   │   ├── Skeletons.jsx      # Loading states
 │   │   └── SEO.jsx            # SEO, Schema.org, breadcrumbs
 │   ├── pages/
-│   │   ├── Home.jsx           # Landing page with hero + content rails
+│   │   ├── Home.jsx           # Landing page with hero + rails
 │   │   ├── Movies.jsx         # Movie browser with tabs
 │   │   ├── TVShows.jsx        # TV show browser with tabs
-│   │   ├── Detail.jsx         # Movie/TV show details + episodes
+│   │   ├── Detail.jsx         # Movie/TV details + episodes
 │   │   ├── Player.jsx         # Multi-server video player
 │   │   ├── Watchlist.jsx      # User watchlist
-│   │   ├── Profile.jsx        # User profile + viewing history
+│   │   ├── Profile.jsx        # User profile + history
 │   │   ├── Explore.jsx        # Genre explorer
 │   │   ├── Blog.jsx           # Blog listing page
 │   │   ├── BlogPost.jsx       # Blog article page
@@ -106,69 +126,60 @@ kinshow/
 │   │   ├── Contact.jsx        # Contact page with FAQ
 │   │   └── Privacy.jsx        # Privacy policy
 │   ├── utils/
-│   │   ├── poster.jsx         # SVG poster generator fallback
+│   │   ├── poster.jsx         # SVG poster generator
 │   │   └── cookies.js         # Cookie utilities
-│   ├── api.js                 # API functions (TVmaze, OMDb, caching)
-│   ├── blogData.js            # Blog articles content
-│   ├── store.js               # State management (watchlist, history)
+│   ├── api.js                 # API functions + caching
+│   ├── blogData.js            # Blog articles
+│   ├── store.js               # State management
 │   ├── index.css              # Global styles
 │   └── main.jsx               # Entry point
 ├── prerender.mjs              # SEO prerender script
 ├── vercel.json                # Vercel SPA config
+├── CONTRIBUTING.md            # Contribution guidelines
+├── LICENSE                    # MIT License
 └── package.json
 ```
 
-## API Integration
+---
 
-### TVmaze
-- TV show search and details
-- Season and episode data
-- Cast information
-- Show images
+## 🤝 Contributing
 
-### OMDb
-- Movie ratings and reviews
-- Poster images (Amazon CDN)
-- Episode data fallback
+We love contributions! Whether it's fixing a bug, adding a feature, or improving docs — all help is welcome.
 
-### Caching
-- 24-hour localStorage cache for API responses
-- Reduces API calls significantly
-- Auto-clears stale OMDb search cache on load
+**Quick start:**
+1. Fork the repo
+2. Create a branch: `git checkout -b fix/my-bug`
+3. Make changes and run `npm run lint`
+4. Commit: `git commit -m "fix: description"`
+5. Push and open a PR
 
-## SEO & GEO Features
+See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines.
 
-- Schema.org structured data (Movie, TVSeries, WebSite, Organization, FAQPage, BreadcrumbList, Article, VideoObject)
-- Open Graph & Twitter Card meta tags
-- Canonical URLs and hreflang tags
-- Pre-rendered HTML for search engines
-- Sitemap.xml with 50+ URLs
-- Blog section with movie-related articles
-- Internal linking via breadcrumbs and related content
+**Open issues:** Check [good first issues](https://github.com/kiinshuk/kinshow/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) to get started.
 
-## Deployment
+---
 
-Deployed on [Vercel](https://vercel.com) with:
-- Automatic deployments from GitHub (main branch)
-- Pre-rendering for SEO
-- Vercel Analytics
-- SPA routing via vercel.json
-
-## Environment Variables
+## 📝 Environment Variables
 
 No environment variables required — APIs use public endpoints.
 
-## License
+---
 
-This project is for educational purposes only. All movie and TV show data, images, and trademarks are property of their respective owners.
+## 📄 License
 
-## Acknowledgments
+MIT License — see [LICENSE](LICENSE) for details.
+
+---
+
+## 🙏 Acknowledgments
 
 - [TVmaze](https://www.tvmaze.com/) — TV show data and images
 - [OMDb API](http://www.omdbapi.com/) — Movie data and posters
 - [Vercel](https://vercel.com) — Hosting and analytics
 
-## Contact
+---
+
+## 📬 Contact
 
 **Kiinshuk** — [kinshuksharma2024@gmail.com](mailto:kinshuksharma2024@gmail.com)
 
@@ -176,4 +187,4 @@ Project Link: [https://github.com/kiinshuk/kinshow](https://github.com/kiinshuk/
 
 ---
 
-If you found this project helpful, please give it a star on GitHub!
+If you found this project helpful, please give it a ⭐ on GitHub!
