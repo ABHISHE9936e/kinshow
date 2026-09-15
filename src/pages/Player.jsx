@@ -3,19 +3,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { SEO, StructuredData, videoSchema } from '../components/SEO';
 
 const SERVERS = [
-  { id: 'vidsrc', name: 'VidSrc', build: (type, imdbId, title, season, episode) => {
-    if (type === 'tv') {
-      if (imdbId && imdbId.startsWith('tt')) return `https://vidsrc.pm/embed/tv?imdb=${imdbId}&season=${season || 1}&episode=${episode || 1}`;
-      return `https://vidsrc.pm/embed/tv?tmdb=${imdbId}&season=${season || 1}&episode=${episode || 1}`;
-    }
-    if (imdbId && imdbId.startsWith('tt')) return `https://vidsrc.pm/embed/movie?imdb=${imdbId}`;
-    return `https://vidsrc.pm/embed/movie?tmdb=${imdbId}`;
-  }},
-  { id: 'vidcore', name: 'VidCore', build: (type, imdbId, title, season, episode) => {
-    const id = imdbId || '';
-    if (type === 'tv') return `https://vidcore.org/embed/tv/${id}/${season || 1}/${episode || 1}`;
-    return `https://vidcore.org/embed/movie/${id}`;
-  }},
   { id: 'peachify', name: 'Peachify', build: (type, imdbId, title, season, episode) => {
     const id = imdbId || '';
     if (type === 'tv') return `https://peachify.top/embed/tv/${id}/${season || 1}/${episode || 1}`;
@@ -25,6 +12,19 @@ const SERVERS = [
     const id = imdbId || '';
     if (type === 'tv') return `https://vidfast.vc/tv/${id}/${season || 1}/${episode || 1}`;
     return `https://vidfast.vc/movie/${id}`;
+  }},
+  { id: 'vidcore', name: 'VidCore', build: (type, imdbId, title, season, episode) => {
+    const id = imdbId || '';
+    if (type === 'tv') return `https://vidcore.org/embed/tv/${id}/${season || 1}/${episode || 1}`;
+    return `https://vidcore.org/embed/movie/${id}`;
+  }},
+  { id: 'vidsrc', name: 'VidSrc', build: (type, imdbId, title, season, episode) => {
+    if (type === 'tv') {
+      if (imdbId && imdbId.startsWith('tt')) return `https://vidsrc.pm/embed/tv?imdb=${imdbId}&season=${season || 1}&episode=${episode || 1}`;
+      return `https://vidsrc.pm/embed/tv?tmdb=${imdbId}&season=${season || 1}&episode=${episode || 1}`;
+    }
+    if (imdbId && imdbId.startsWith('tt')) return `https://vidsrc.pm/embed/movie?imdb=${imdbId}`;
+    return `https://vidsrc.pm/embed/movie?tmdb=${imdbId}`;
   }},
 ];
 
