@@ -928,6 +928,37 @@ ul, ol { list-style: none; }
 .blog-post-content a { color: var(--accent); text-decoration: none; }
 .blog-post-content a:hover { text-decoration: underline; }
 
+/* Skeleton Detail Fix */
+.detail-skeleton {
+  padding: 100px 40px 40px 40px; /* Top padding 100px kar di taaki navbar ke neeche aaye */
+  width: 100%;
+  min-height: 80vh; /* Isse screen ki height badh jayegi aur footer neeche chala jayega */
+  position: relative;
+}
+
+.detail-skeleton-content {
+  display: flex;
+  gap: 40px; 
+}
+
+.detail-skeleton-poster {
+  width: 280px;
+  height: 420px; 
+  background: #333; 
+  border-radius: 8px;
+}
+
+.detail-skeleton-info {
+  display: flex;
+  flex-direction: column; 
+  gap: 16px;
+  width: 100%;
+}
+
+.skeleton-line--h32 {
+  height: 32px; 
+}
+
 @media (max-width: 640px) {
   .blog-grid { grid-template-columns: 1fr; padding: 0 16px; }
   .blog-card--small { max-width: 100%; }
