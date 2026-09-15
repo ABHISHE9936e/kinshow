@@ -3,6 +3,7 @@ import { ToastProvider } from './components/Toast';
 import { useWatchlist } from './store';
 import Navbar from './components/Navbar';
 import CookieConsent from './components/CookieConsent';
+import ErrorBoundary from './components/ErrorBoundary';
 import Home from './pages/Home';
 import Movies from './pages/Movies';
 import TVShows from './pages/TVShows';
@@ -22,6 +23,7 @@ function AppInner() {
   return (
     <>
       <Navbar watchlistCount={list.length} />
+      <ErrorBoundary>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/movies" element={<Movies />} />
@@ -37,6 +39,7 @@ function AppInner() {
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
       </Routes>
+      </ErrorBoundary>
       <footer className="footer">
         <div className="footer-inner">
           <div className="footer-grid">

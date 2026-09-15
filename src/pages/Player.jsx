@@ -40,7 +40,7 @@ export default function Player() {
   useEffect(() => {
     if (location.state) { setLoc(location.state); localStorage.setItem('lg_lastViewed', JSON.stringify(location.state)); }
     else { const saved = localStorage.getItem('lg_lastViewed'); if (saved) setLoc(JSON.parse(saved)); }
-  }, [location.state]);
+  }, [location.state?.type, location.state?.id, location.state?.season, location.state?.episode]);
 
   useEffect(() => { const h = (e) => { if (e.key === 'Escape') navigate(-1); }; window.addEventListener('keydown', h); return () => window.removeEventListener('keydown', h); }, [navigate]);
 
