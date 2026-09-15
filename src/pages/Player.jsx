@@ -12,12 +12,9 @@ const SERVERS = [
     return `https://vidsrc.pm/embed/movie?tmdb=${imdbId}`;
   }},
   { id: 'vidcore', name: 'VidCore', build: (type, imdbId, title, season, episode) => {
-    if (type === 'tv') {
-      if (imdbId && imdbId.startsWith('tt')) return `https://vidcore.org/embed/tv?imdb=${imdbId}&season=${season || 1}&episode=${episode || 1}`;
-      return `https://vidcore.org/embed/tv?tmdb=${imdbId}&season=${season || 1}&episode=${episode || 1}`;
-    }
-    if (imdbId && imdbId.startsWith('tt')) return `https://vidcore.org/embed/movie?imdb=${imdbId}`;
-    return `https://vidcore.org/embed/movie?tmdb=${imdbId}`;
+    const id = imdbId || '';
+    if (type === 'tv') return `https://vidcore.org/embed/tv/${id}/${season || 1}/${episode || 1}`;
+    return `https://vidcore.org/embed/movie/${id}`;
   }},
   { id: 'peachify', name: 'Peachify', build: (type, imdbId, title, season, episode) => {
     const id = imdbId || '';
