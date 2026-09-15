@@ -18,6 +18,7 @@ import Privacy from './pages/Privacy';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import { useEffect } from 'react';
+import NotFound from './pages/NotFound';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -52,6 +53,7 @@ function AppInner() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route path='*' element={<NotFound /> }/>
       </Routes>
       </ErrorBoundary>
       <footer className="footer">
@@ -76,7 +78,7 @@ function AppInner() {
                 <li><Link to="/about">About</Link></li>
                 <li><Link to="/blog">Blog</Link></li>
                 <li><Link to="/contact">Contact</Link></li>
-                <li><Link to="/privacy">Privacy Policy</Link></li>
+                <li><Link to="/privacy">Privacy Policyt</Link></li>
               </ul>
             </div>
             <div className="footer-col">
