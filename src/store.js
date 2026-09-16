@@ -10,7 +10,7 @@ function useLocalStorage(key, initial) {
 
 export function useWatchlist() {
   const [list, setList] = useLocalStorage('watchlist', []);
-  const add = useCallback((item) => setList(p => p.some(i => i.id === item.id) ? p : [...p, { id: item.id, type: item.media_type || (item.title ? 'movie' : 'tv'), title: item.title || item.name, poster_path: item.poster_path, added: Date.now() }]), [setList]);
+  const add = useCallback((item) => setList(p => p.some(i => i.id === item.id) ? p : [...p, { id: item.id, type: item.media_type || (item.title ? 'movie' : 'tv'), title: item.title || item.name, poster_path: item.poster_path, runtime: Number(item.runtime) || 0, added: Date.now() }]), [setList]);
   const remove = useCallback((id) => setList(p => p.filter(i => i.id !== id)), [setList]);
   const has = useCallback((id) => list.some(i => i.id === id), [list]);
   return { list, add, remove, has };
@@ -21,7 +21,7 @@ export function useHistory() {
   const add = useCallback((item, progress = 0) => {
     setList(p => {
       const filtered = p.filter(i => !(i.id === item.id && i.type === (item.media_type || (item.title ? 'movie' : 'tv'))));
-      return [{ id: item.id, type: item.media_type || (item.title ? 'movie' : 'tv'), title: item.title || item.name, poster_path: item.poster_path, backdrop_path: item.backdrop_path, progress, season: item.season, episode: item.episode, watched: Date.now() }, ...filtered].slice(0, 50);
+      return [{ id: item.id, type: item.media_type || (item.title ? 'movie' : 'tv'), title: item.title || item.name, poster_path: item.poster_path, backdrop_path: item.backdrop_path, runtime: Number(item.runtime) || 0, progress, season: item.season, episode: item.episode, watched: Date.now() }, ...filtered].slice(0, 50);
     });
   }, [setList]);
   const remove = useCallback((id, type) => setList(p => p.filter(i => !(i.id === id && i.type === type))), [setList]);
