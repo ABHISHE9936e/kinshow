@@ -945,6 +945,7 @@ ul, ol { list-style: none; }
 .blog-post-content strong { color: var(--text); }
 .blog-post-content a { color: var(--accent); text-decoration: none; }
 .blog-post-content a:hover { text-decoration: underline; }
+
 /* Skeleton Detail Fix */
 .detail-skeleton {
   padding: 100px 40px 40px 40px; /* Top padding 100px kar di taaki navbar ke neeche aaye */

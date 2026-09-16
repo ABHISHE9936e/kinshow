@@ -53,7 +53,7 @@ function AppInner() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
-        <Route path='*' element={<NotFound /> }/>
+        <Route path="*" element={<NotFound /> }/>
       </Routes>
       </ErrorBoundary>
       <footer className="footer">
@@ -78,7 +78,7 @@ function AppInner() {
                 <li><Link to="/about">About</Link></li>
                 <li><Link to="/blog">Blog</Link></li>
                 <li><Link to="/contact">Contact</Link></li>
-                <li><Link to="/privacy">Privacy Policyt</Link></li>
+                <li><Link to="/privacy">Privacy Policy</Link></li>
               </ul>
             </div>
             <div className="footer-col">
