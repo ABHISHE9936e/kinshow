@@ -515,6 +515,30 @@ ul, ol { list-style: none; }
   overflow-x: auto; scroll-snap-type: x mandatory;
   scrollbar-width: none; padding: 4px 0;
 }
+
+.cast-scroll-wrapper {
+  position: relative;
+}
+
+.cast-scroll-fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.cast-scroll-fade--left {
+  left: 0;
+  background: linear-gradient(to right, var(--bg), transparent);
+}
+
+.cast-scroll-fade--right {
+  right: 0;
+  background: linear-gradient(to left, var(--bg), transparent);
+}
+
 .cast-scroll::-webkit-scrollbar { display: none; }
 .cast-card {
   flex: 0 0 110px; scroll-snap-align: start; text-align: center;

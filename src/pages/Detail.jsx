@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { tvmazeShow, tvmazeSeasons, tvmazeEpisodes, omdbEpisodes, MOVIES, title as t, year as y, rating as r, runtime } from '../api';
 import { useWatchlist, useHistory } from '../store';
@@ -18,9 +18,50 @@ export default function Detail() {
   const [episodes, setEpisodes] = useState([]);
   const [seasonNum, setSeasonNum] = useState(1);
   const [loading, setLoading] = useState(true);
+  const castScrollRef = useRef(null);
+  const [showCastLeftFade, setShowCastLeftFade] = useState(false);
+  const [showCastRightFade, setShowCastRightFade] = useState(false);
   const { add, remove, has } = useWatchlist();
   const { add: addHistory } = useHistory();
   const toast = useToast();
+
+  const updateCastScroll = () => {
+    const el = castScrollRef.current;
+    if (!el) return;
+
+    setShowCastLeftFade(el.scrollLeft > 0);
+    setShowCastRightFade(
+      el.scrollLeft + el.clientWidth < el.scrollWidth - 1
+    );
+  };
+
+  useEffect(() => {
+    const el = castScrollRef.current;
+    if (!el) return;
+
+    const checkScroll = () => {
+      updateCastScroll();
+    };
+
+    const handleWheel = (e) => {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        e.preventDefault();
+        el.scrollLeft += e.deltaY;
+      }
+    };
+
+    requestAnimationFrame(checkScroll);
+
+    el.addEventListener('scroll', checkScroll);
+    el.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener('resize', checkScroll);
+
+    return () => {
+      el.removeEventListener('scroll', checkScroll);
+      el.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('resize', checkScroll);
+    };
+  }, [data?.cast]);
 
   useEffect(() => {
     setLoading(true); setData(null); setSeasons([]); setEpisodes([]);
@@ -151,7 +192,19 @@ export default function Detail() {
       {data.cast?.length > 0 && (
         <section className="detail-section">
           <h2 className="detail-section-title">Cast</h2>
-          <div className="cast-scroll">{data.cast.slice(0, 12).map((p, i) => <CastCard key={i} person={p} />)}</div>
+          <div className="cast-scroll-wrapper">
+            {showCastLeftFade && (
+              <div className="cast-scroll-fade cast-scroll-fade--left" />
+            )}
+            <div ref={castScrollRef} className="cast-scroll">
+              {data.cast.slice(0, 12).map((p, i) => (
+                <CastCard key={i} person={p} />
+              ))}
+            </div>
+            {showCastRightFade && (
+              <div className="cast-scroll-fade cast-scroll-fade--right" />
+            )}
+          </div>
         </section>
       )}
 
