@@ -75,17 +75,17 @@ export default function Detail() {
 
   const toggleWatchlist = () => {
     if (has(itemId)) { remove(itemId); toast(`${title} removed from My List`); }
-    else { add({ id: itemId, media_type: type, title, poster_path: posterUrl || fallbackPoster }); toast(`${title} added to My List`, 'success'); }
+    else { add({ id: itemId, media_type: type, title, poster_path: posterUrl || fallbackPoster, runtime: data.runtime }); toast(`${title} added to My List`, 'success'); }
   };
 
   const playContent = () => {
-    addHistory({ id: itemId, media_type: type, title, poster_path: posterUrl }, 0);
+    addHistory({ id: itemId, media_type: type, title, poster_path: posterUrl, runtime: data.runtime }, 0);
     navigate('/player', { state: { type, id: itemId, title, imdbId } });
   };
 
   const playEpisode = (ep) => {
     const itemId = imdbId || String(id);
-    addHistory({ id: itemId, media_type: 'tv', title, poster_path: posterUrl, season: seasonNum, episode: ep.number }, 0);
+    addHistory({ id: itemId, media_type: 'tv', title, poster_path: posterUrl, runtime: data.runtime, season: seasonNum, episode: ep.number }, 0);
     navigate('/player', { state: { type: 'tv', id: itemId, title, imdbId, season: seasonNum, episode: ep.number } });
   };
 

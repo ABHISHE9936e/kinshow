@@ -9,6 +9,9 @@ export default function Profile() {
   const movies = list.filter(i => (i.type || i.media_type) === 'movie').length;
   const tv = list.filter(i => (i.type || i.media_type) === 'tv').length;
   const recent = history.slice(0, 6);
+  const totalRuntime = [...list, ...history].reduce((total, item) => total + (Number(item.runtime) || 0), 0);
+  const runtimeHours = Math.floor(totalRuntime / 60);
+  const runtimeMinutes = totalRuntime % 60;
 
   return (
     <main className="page">
@@ -25,6 +28,7 @@ export default function Profile() {
         <div className="profile-stat"><span className="profile-stat-value">{movies}</span><span className="profile-stat-label">Films</span></div>
         <div className="profile-stat"><span className="profile-stat-value">{tv}</span><span className="profile-stat-label">Series</span></div>
         <div className="profile-stat"><span className="profile-stat-value">{history.length}</span><span className="profile-stat-label">Watched</span></div>
+        <div className="profile-stat"><span className="profile-stat-value">{runtimeHours}h {runtimeMinutes}m</span><span className="profile-stat-label">Watch Time</span></div>
       </div>
       {recent.length > 0 && (
         <section className="detail-section">
