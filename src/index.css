@@ -217,6 +217,33 @@ ul, ol { list-style: none; }
 .search-overlay-status { padding: 24px; text-align: center; color: var(--text-muted); font-size: 14px; }
 .search-overlay-hint { padding: 24px; text-align: center; color: var(--text-muted); font-size: 13px; }
 .search-overlay-hint kbd { background: var(--surface); padding: 2px 6px; border-radius: 3px; font-size: 11px; border: 1px solid var(--border-strong); }
+.search-history { padding: 8px; }
+.search-history-title { padding: 8px; color: var(--text-muted); font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+.search-history-item {
+  display: flex; align-items: center;
+  width: 100%; padding: 2px;
+  border-radius: var(--radius-sm);
+  transition: background var(--duration) var(--ease);
+}
+.search-history-query {
+  display: flex; align-items: center; gap: 10px;
+  flex: 1; min-width: 0; padding: 8px 6px;
+  color: var(--text-secondary); text-align: left;
+  border-radius: var(--radius-sm);
+  transition: color var(--duration) var(--ease);
+}
+.search-history-query svg { color: var(--text-muted); flex-shrink: 0; }
+.search-history-query span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.search-history-item:hover { background: var(--surface); }
+.search-history-item:hover .search-history-query { color: var(--text); }
+.search-history-item:hover .search-history-query svg { color: var(--accent); }
+.search-history-remove {
+  width: 28px; height: 28px; flex-shrink: 0;
+  border-radius: 50%; color: var(--text-muted);
+  font-size: 18px; line-height: 1;
+  transition: color var(--duration) var(--ease), background var(--duration) var(--ease);
+}
+.search-history-remove:hover { color: var(--text); background: var(--surface-hover); }
 
 /* ─── HERO ────────────────────────────────── */
 .hero {

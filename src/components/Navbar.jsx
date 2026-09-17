@@ -2,20 +2,75 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { searchMulti, title as t, year as y } from '../api';
 
+// Keep recent searches local to this browser and discard them after one week.
+const SEARCH_HISTORY_KEY = 'lg_searchHistory';
+const SEARCH_HISTORY_TTL = 7 * 24 * 60 * 60 * 1000;
+
 export default function Navbar({ watchlistCount }) {
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
+  const [searchHistory, setSearchHistory] = useState([]);
   const [loading, setLoading] = useState(false);
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
   const timerRef = useRef(null);
 
+  const loadSearchHistory = useCallback(() => {
+    try {
+      const stored = JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || '[]');
+      const cutoff = Date.now() - SEARCH_HISTORY_TTL;
+      const recent = stored
+        .filter(item => item && item.query && item.timestamp > cutoff)
+        .sort((a, b) => b.timestamp - a.timestamp)
+        .slice(0, 5);
+
+      localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(recent));
+      setSearchHistory(recent);
+    } catch {
+      setSearchHistory([]);
+    }
+  }, []);
+
+  const saveSearch = useCallback((value) => {
+    const normalized = value.trim();
+    if (!normalized) return;
+
+    try {
+      const stored = JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || '[]');
+      const cutoff = Date.now() - SEARCH_HISTORY_TTL;
+      const withoutDuplicate = stored.filter(item =>
+        item && item.query && item.timestamp > cutoff && item.query.toLowerCase() !== normalized.toLowerCase()
+      );
+      const next = [{ query: normalized, timestamp: Date.now() }, ...withoutDuplicate].slice(0, 5);
+      localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(next));
+      setSearchHistory(next);
+    } catch {
+      setSearchHistory([]);
+    }
+  }, []);
+
+  const removeSearch = useCallback((timestamp) => {
+    try {
+      const stored = JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || '[]');
+      const next = stored.filter(item => item?.timestamp !== timestamp);
+      localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(next));
+      setSearchHistory(next);
+    } catch {
+      setSearchHistory([]);
+    }
+  }, []);
+
   useEffect(() => { const h = () => setScrolled(window.scrollY > 30); window.addEventListener('scroll', h, { passive: true }); return () => window.removeEventListener('scroll', h); }, []);
   useEffect(() => { setSearchOpen(false); setQuery(''); setResults([]); }, [location]);
-  useEffect(() => { if (searchOpen && inputRef.current) inputRef.current.focus(); }, [searchOpen]);
+  useEffect(() => {
+    if (searchOpen) {
+      loadSearchHistory();
+      if (inputRef.current) inputRef.current.focus();
+    }
+  }, [searchOpen, loadSearchHistory]);
   useEffect(() => {
     const h = (e) => { if (e.key === '/' && !searchOpen && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) { e.preventDefault(); setSearchOpen(true); } if (e.key === 'Escape') { setSearchOpen(false); setQuery(''); setResults([]); } };
     window.addEventListener('keydown', h); return () => window.removeEventListener('keydown', h);
@@ -27,13 +82,15 @@ export default function Navbar({ watchlistCount }) {
     if (!q.trim()) { setResults([]); return; }
     setLoading(true);
     timerRef.current = setTimeout(async () => {
+      saveSearch(q);
       const d = await searchMulti(q);
       setResults(d?.results?.slice(0, 10) || []);
       setLoading(false);
     }, 400);
-  }, []);
+  }, [saveSearch]);
 
-  const go = (type, id) => { navigate(`/detail/${type}/${id}`); setSearchOpen(false); setQuery(''); setResults([]); };
+  const go = (type, id) => { saveSearch(query); navigate(`/detail/${type}/${id}`); setSearchOpen(false); setQuery(''); setResults([]); };
+  const useSearchHistory = (value) => { setQuery(value); search(value); };
   const isActive = (p) => location.pathname === p;
 
   return (
@@ -104,7 +161,21 @@ export default function Navbar({ watchlistCount }) {
               </div>
             )}
             {!loading && query && results.length === 0 && <div className="search-overlay-status">No results for "{query}"</div>}
-            {!query && <div className="search-overlay-hint">Start typing to search... Press <kbd>/</kbd> to open anytime</div>}
+            {!query && searchHistory.length > 0 && (
+              <div className="search-history">
+                <div className="search-history-title">Recent searches</div>
+                {searchHistory.map(item => (
+                  <div key={`${item.query}-${item.timestamp}`} className="search-history-item">
+                    <button className="search-history-query" onClick={() => useSearchHistory(item.query)}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                      <span>{item.query}</span>
+                    </button>
+                    <button className="search-history-remove" onClick={() => removeSearch(item.timestamp)} aria-label={`Remove ${item.query} from recent searches`}>&times;</button>
+                  </div>
+                ))}
+              </div>
+            )}
+            {!query && searchHistory.length === 0 && <div className="search-overlay-hint">Start typing to search... Press <kbd>/</kbd> to open anytime</div>}
           </div>
         </div>
       )}
