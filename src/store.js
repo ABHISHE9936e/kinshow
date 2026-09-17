@@ -1,11 +1,57 @@
 import { useState, useCallback, useEffect } from 'react';
 
+const SEARCH_HISTORY_KEY = 'lg_searchHistory';
+const SEARCH_HISTORY_TTL = 7 * 24 * 60 * 60 * 1000;
+
 function useLocalStorage(key, initial) {
   const [val, setVal] = useState(() => {
     try { const d = localStorage.getItem('lg_' + key); return d ? JSON.parse(d) : initial; } catch { return initial; }
   });
   useEffect(() => { try { localStorage.setItem('lg_' + key, JSON.stringify(val)); } catch {} }, [key, val]);
   return [val, setVal];
+}
+
+export function getSearchHistory() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || '[]');
+    const cutoff = Date.now() - SEARCH_HISTORY_TTL;
+    const recent = Array.isArray(stored)
+      ? stored
+        .filter(item => item && item.query && item.timestamp > cutoff)
+        .sort((a, b) => b.timestamp - a.timestamp)
+        .slice(0, 5)
+      : [];
+
+    localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(recent));
+    return recent;
+  } catch {
+    return [];
+  }
+}
+
+export function saveSearchTerm(value) {
+  const normalized = value.trim();
+  if (!normalized) return getSearchHistory();
+
+  try {
+    const history = getSearchHistory();
+    const withoutDuplicate = history.filter(item => item.query.toLowerCase() !== normalized.toLowerCase());
+    const next = [{ query: normalized, timestamp: Date.now() }, ...withoutDuplicate].slice(0, 5);
+    localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(next));
+    return next;
+  } catch {
+    return [];
+  }
+}
+
+export function removeSearchTerm(timestamp) {
+  try {
+    const next = getSearchHistory().filter(item => item.timestamp !== timestamp);
+    localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(next));
+    return next;
+  } catch {
+    return [];
+  }
 }
 
 export function useWatchlist() {

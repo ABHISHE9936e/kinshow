@@ -1,10 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { searchMulti, title as t, year as y } from '../api';
-
-// Keep recent searches local to this browser and discard them after one week.
-const SEARCH_HISTORY_KEY = 'lg_searchHistory';
-const SEARCH_HISTORY_TTL = 7 * 24 * 60 * 60 * 1000;
+import { getSearchHistory, saveSearchTerm, removeSearchTerm } from '../store';
 
 export default function Navbar({ watchlistCount }) {
   const [scrolled, setScrolled] = useState(false);
@@ -19,48 +16,15 @@ export default function Navbar({ watchlistCount }) {
   const timerRef = useRef(null);
 
   const loadSearchHistory = useCallback(() => {
-    try {
-      const stored = JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || '[]');
-      const cutoff = Date.now() - SEARCH_HISTORY_TTL;
-      const recent = stored
-        .filter(item => item && item.query && item.timestamp > cutoff)
-        .sort((a, b) => b.timestamp - a.timestamp)
-        .slice(0, 5);
-
-      localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(recent));
-      setSearchHistory(recent);
-    } catch {
-      setSearchHistory([]);
-    }
+    setSearchHistory(getSearchHistory());
   }, []);
 
   const saveSearch = useCallback((value) => {
-    const normalized = value.trim();
-    if (!normalized) return;
-
-    try {
-      const stored = JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || '[]');
-      const cutoff = Date.now() - SEARCH_HISTORY_TTL;
-      const withoutDuplicate = stored.filter(item =>
-        item && item.query && item.timestamp > cutoff && item.query.toLowerCase() !== normalized.toLowerCase()
-      );
-      const next = [{ query: normalized, timestamp: Date.now() }, ...withoutDuplicate].slice(0, 5);
-      localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(next));
-      setSearchHistory(next);
-    } catch {
-      setSearchHistory([]);
-    }
+    setSearchHistory(saveSearchTerm(value));
   }, []);
 
   const removeSearch = useCallback((timestamp) => {
-    try {
-      const stored = JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || '[]');
-      const next = stored.filter(item => item?.timestamp !== timestamp);
-      localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(next));
-      setSearchHistory(next);
-    } catch {
-      setSearchHistory([]);
-    }
+    setSearchHistory(removeSearchTerm(timestamp));
   }, []);
 
   useEffect(() => { const h = () => setScrolled(window.scrollY > 30); window.addEventListener('scroll', h, { passive: true }); return () => window.removeEventListener('scroll', h); }, []);
