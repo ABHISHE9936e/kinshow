@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 
 function ScrollButton() {
-  const [isVisible, setisVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   useEffect(function () {
     function scrollY() {
       const scroll = window.scrollY;
       if (scroll > 400) {
-        setisVisible(true);
-      } else if (scroll < 400) {
-        setisVisible(false);
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
       }
     }
     window.addEventListener("scroll", scrollY);
@@ -24,10 +24,8 @@ function ScrollButton() {
     });
   }
   return (
-    <>
-      {isVisible ? (
         <button
-          className="btn--icon scroll-to-top-btn"
+          className={`btn--icon scroll-to-top-btn ${isVisible ? 'scroll-to-top-btn--visible' : ''}`}
           onClick={() => handleScroll()}
           aria-label="Scroll to top"
         >
@@ -45,8 +43,6 @@ function ScrollButton() {
             <polyline points="5 12 12 5 19 12" />
           </svg>
         </button>
-      ) : null}
-    </>
   );
 }
 
