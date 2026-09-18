@@ -150,6 +150,9 @@ ul, ol { list-style: none; }
   .nav-links, .nav-actions { display: none; }
   .mobile-nav { display: flex; }
   .page { padding-bottom: 72px !important; }
+  button.scroll-to-top-btn {
+    display: none;
+  }
 }
 
 /* ─── SEARCH OVERLAY ──────────────────────── */
@@ -329,6 +332,28 @@ ul, ol { list-style: none; }
 .btn--icon { width: 40px; height: 40px; padding: 0; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: var(--text-secondary); border: 1px solid var(--border-strong); }
 .btn--icon:hover { color: var(--text); background: var(--surface); }
 .btn--block { width: 100%; justify-content: center; }
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 400;
+  border-color: var(--accent);
+  color: var(--accent);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.scroll-to-top-btn.scroll-to-top-btn--visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.scroll-to-top-btn:hover {
+  background: var(--accent);
+  color: white;
+  transform: translateY(-2px);
+}
 
 /* ─── CONTENT RAIL ────────────────────────── */
 .rails { max-width: 1400px; margin: 0 auto; padding: 0 24px; display: flex; flex-direction: column; gap: 36px; padding-top: 40px; padding-bottom: 60px; }
