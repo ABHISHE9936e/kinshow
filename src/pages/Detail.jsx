@@ -9,6 +9,7 @@ import { SkeletonDetail } from '../components/Skeletons';
 import { PosterImg, makePoster } from '../utils/poster';
 import { SEO, StructuredData, movieSchema, tvSchema, breadcrumbSchema } from '../components/SEO';
 import { addRecent } from '../utils/cookies';
+import { EmptyState } from '../components/EmptyState';
 
 export default function Detail() {
   const { type, id } = useParams();
@@ -105,7 +106,20 @@ export default function Detail() {
   }, [data?.tvmazeId, data?.imdbID, seasonNum, type, id]);
 
   if (loading) return <main className="page detail"><SkeletonDetail /></main>;
-  if (!data) return <main className="page detail"><div className="empty-state"><h3>Not found</h3><p>This title could not be loaded.</p><Link to="/" className="btn btn--secondary">Go Home</Link></div></main>;
+  if (!data) return <main className="page detail"><div className="empty-state">
+    <EmptyState 
+  icon={
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="8" x2="12" y2="12"></line>
+      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+    </svg>
+  }
+  title="No Results Found"
+  description="We couldn't find the data you were looking for."
+/>
+    
+    <p>This title could not be loaded.</p><Link to="/" className="btn btn--secondary">Go Home</Link></div></main>;
 
   const title = t(data);
   const imdbId = data.imdbID || null;

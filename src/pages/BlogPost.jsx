@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { SEO, StructuredData, breadcrumbSchema } from '../components/SEO';
 import { getBlogPost, getBlogPosts } from '../blogData';
+import { EmptyState } from '../components/EmptyState';
 
 export default function BlogPost() {
   const { slug } = useParams();
@@ -10,7 +11,17 @@ export default function BlogPost() {
     return (
       <main className="page">
         <div className="empty-state">
-          <h3>Article not found</h3>
+         <EmptyState 
+  icon={
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="8" x2="12" y2="12"></line>
+      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+    </svg>
+  }
+  title="No Results Found"
+  description="We couldn't find the data you were looking for."
+/>
           <p>This blog post could not be found.</p>
           <Link to="/blog" className="btn btn--secondary">Back to Blog</Link>
         </div>
